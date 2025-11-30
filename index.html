@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programatorul Tău - Soluții IT Personalizate</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0" y1="0" x2="52" y2="52">
+                                <stop offset="0%" stop-color="#6366F1"/>
+                                <stop offset="100%" stop-color="#8B5CF6"/>
+                            </linearGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <!-- Background rounded square with gradient -->
+                        <rect width="52" height="52" rx="14" fill="url(#logoGradient)"/>
+                        <!-- Letter P - Bold modern style -->
+                        <path d="M14 10 L14 42 M14 10 L14 10 L26 10 Q34 10 34 18 Q34 24 28 24 L14 24" 
+                              stroke="white" 
+                              stroke-width="4" 
+                              stroke-linecap="round" 
+                              stroke-linejoin="round" 
+                              fill="none"
+                              filter="url(#glow)"/>
+                        <!-- Golden accent dot -->
+                        <circle cx="36" cy="18" r="3.5" fill="#FFD700"/>
+                    </svg>
+                    <div class="logo-text">
+                        <span class="logo-main">Programatorul Tău</span>
+                        <span class="logo-domain">.com</span>
+                    </div>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#home">Acasă</a></li>
+                    <li><a href="#servicii">Servicii</a></li>
+                    <li><a href="solutions.html">Soluții</a></li>
+                    <li><a href="#proiecte">Proiecte</a></li>
+                    <li><a href="#site-la-click">Site la Click</a></li>
+                    <li><a href="#consultatie">Consultație Gratuită</a></li>
+                    <li><a href="#contact" class="btn-contact">Contact</a></li>
+                </ul>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Transformăm <span class="gradient-text">ideile</span> în
+                    <span class="gradient-text">soluții digitale</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Facem aplicații mobile, site-uri web, integrări cu eMAG, PayU, Stripe și multe altele.
+                    <strong>Discutăm cu tine GRATIS</strong> despre proiectul tău - programează o întâlnire online de 40 de minute!
+                </p>
+                <div class="hero-buttons">
+                    <a href="#consultatie" class="btn btn-primary pulse-btn">📅 Consultație Gratuită</a>
+                    <a href="#proiecte" class="btn btn-secondary">Vezi Proiectele</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Proiecte Finalizate</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">30+</div>
+                        <div class="stat-label">Clienți Mulțumiți</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Ani Experiență</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-background">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+            <canvas id="particles-canvas"></canvas>
+        </div>
+        <div class="hero-image">
+            <div class="hero-image-placeholder">
+                <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="200" height="200" rx="20" fill="url(#gradient)"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="200" y2="200">
+                            <stop offset="0%" stop-color="#6366F1"/>
+                            <stop offset="100%" stop-color="#8B5CF6"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M100 50L130 90H70L100 50Z" fill="white" opacity="0.9"/>
+                    <path d="M70 110L100 150L130 110H70Z" fill="white" opacity="0.9"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicii" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Serviciile Noastre</h2>
+                <p class="section-subtitle">Soluții complete pentru nevoile tale digitale</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                            <line x1="12" y1="18" x2="12" y2="18.01"/>
+                        </svg>
+                    </div>
+                    <h3>Aplicații Mobile</h3>
+                    <p>Facem aplicații pentru telefon (iPhone și Android). Aplicația ta va funcționa perfect pe toate telefoanele și o facem rapid.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                    </div>
+                    <h3>Integrări API</h3>
+                    <p>Conectăm site-ul sau aplicația ta cu alte servicii (ex: eMAG, PayU, Sameday). Totul se face automat, fără să te mai ocupi tu manual.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"/>
+                            <circle cx="20" cy="21" r="1"/>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                        </svg>
+                    </div>
+                    <h3>Magazine Online</h3>
+                    <p>Facem magazin online complet - poți vinde produse, primești comenzi, plăți online. Totul funcționează automat.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                    <h3>Integrări Plăți</h3>
+                    <p>Conectăm site-ul tău cu PayU, Stripe sau eMAG Pay. Clienții pot plăti cu cardul direct pe site - sigur și rapid.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+                        </svg>
+                    </div>
+                    <h3>Integrări eMAG</h3>
+                    <p>Conectăm magazinul tău cu eMAG. Produsele se sincronizează automat, primești comenzi direct, stocul se actualizează singur.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="7.5 4.21 12 6.81 16.5 4.21"/>
+                            <polyline points="7.5 19.79 7.5 14.6 3 12"/>
+                            <polyline points="21 12 16.5 14.6 16.5 19.79"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                    </div>
+                    <h3>Integrări Logistice</h3>
+                    <p>Conectăm site-ul cu Sameday, Fan Courier, GLS. Când vine o comandă, se trimite automat la curier - nu mai scrii tu AWB-uri manual.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3>Integrări Uber / Bolt</h3>
+                    <p>Dacă ai nevoie de livrări rapide, conectăm site-ul cu Uber sau Bolt pentru livrări instant.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                        </svg>
+                    </div>
+                    <h3>Soluții Custom</h3>
+                    <p>Dacă ai nevoie de ceva special, făcut doar pentru tine - facem orice software ai nevoie, exact cum vrei tu.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Servicii Realizate Section -->
+    <section id="servicii-realizate" class="services-done">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Soluții pe Care Le-am Realizat</h2>
+                <p class="section-subtitle">Sisteme complete, funcționale și testate în producție</p>
+                <p class="section-note">💡 <strong>Toate soluțiile se pot vinde ca servicii lunare sau one-time</strong> - alegi tu modelul care ți se potrivește!</p>
+            </div>
+            <div class="carousel-container">
+                <button class="carousel-btn carousel-prev" aria-label="Previous">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"/>
+                    </svg>
+                </button>
+                <div class="services-done-carousel">
+                    <div class="carousel-track">
+                <div class="service-done-card">
+                    <div class="service-done-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="9" y1="3" x2="9" y2="21"/>
+                            <line x1="3" y1="9" x2="21" y2="9"/>
+                            <path d="M9 12h6M12 9v6"/>
+                        </svg>
+                    </div>
+                    <h3>WMS - Warehouse Management</h3>
+                    <p>Sisteme complete de gestionare depozit pentru depozite mici, medii sau mari. Fluxuri personalizabile: recepție mărfuri, inventar, picking, livrări, raportare.</p>
+                    <div class="service-features">
+                        <span class="feature-badge">Recepție mărfuri</span>
+                        <span class="feature-badge">Inventar automat</span>
+                        <span class="feature-badge">Picking optimizat</span>
+                        <span class="feature-badge">Raportare</span>
+                    </div>
+                </div>
+                <div class="service-done-card">
+                    <div class="service-done-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"/>
+                            <circle cx="20" cy="21" r="1"/>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                        </svg>
+                    </div>
+                    <h3>Magazine Online</h3>
+                    <p>Magazine e-commerce complete, gata de lansare în <strong>1 săptămână</strong>. Catalog produse, plăți online, gestionare comenzi, integrare curierat.</p>
+                    <div class="service-features">
+                        <span class="feature-badge highlight">⚡ 1 săptămână</span>
+                        <span class="feature-badge">Plăți online</span>
+                        <span class="feature-badge">Gestionare comenzi</span>
+                        <span class="feature-badge">Integrare curierat</span>
+                    </div>
+                </div>
+                <div class="service-done-card">
+                    <div class="service-done-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="9" y1="3" x2="9" y2="21"/>
+                            <line x1="3" y1="9" x2="21" y2="9"/>
+                            <line x1="3" y1="15" x2="21" y2="15"/>
+                            <line x1="3" y1="21" x2="21" y2="21"/>
+                        </svg>
+                    </div>
+                    <h3>Dashboard-uri & Analytics</h3>
+                    <p>Panouri de control personalizate cu grafice, rapoarte în timp real, KPI-uri și analiză date. Pentru management, vânzări, marketing sau operațiuni.</p>
+                    <div class="service-features">
+                        <span class="feature-badge">Grafice interactive</span>
+                        <span class="feature-badge">Raportare real-time</span>
+                        <span class="feature-badge">KPI tracking</span>
+                        <span class="feature-badge">Export date</span>
+                    </div>
+                </div>
+                <div class="service-done-card">
+                    <div class="service-done-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                            <path d="M7 8h10M7 12h10M7 16h6"/>
+                        </svg>
+                    </div>
+                    <h3>Meniuri Digitale HORECA</h3>
+                    <p>Sisteme de meniu digital pentru restaurante, cafenele, baruri. Actualizare instant, categorii personalizate, prețuri dinamice, integrare POS.</p>
+                    <div class="service-features">
+                        <span class="feature-badge">Actualizare instant</span>
+                        <span class="feature-badge">Categorii custom</span>
+                        <span class="feature-badge">Integrare POS</span>
+                        <span class="feature-badge">QR code</span>
+                    </div>
+                </div>
+                <div class="service-done-card">
+                    <div class="service-done-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                    </div>
+                    <h3>PMS - Property Management</h3>
+                    <p>Sisteme de gestionare proprietăți pentru hoteluri, pensiuni, apartamente. Rezervări, check-in/out, facturare, raportare, sincronizare booking platforms.</p>
+                    <div class="service-features">
+                        <span class="feature-badge">Rezervări</span>
+                        <span class="feature-badge">Check-in/out</span>
+                        <span class="feature-badge">Facturare</span>
+                        <span class="feature-badge">Booking sync</span>
+                    </div>
+                </div>
+                <div class="service-done-card">
+                    <div class="service-done-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3>ERP & Business Management</h3>
+                    <p>Sisteme ERP complete pentru gestionarea întregii afaceri: contabilitate, stocuri, vânzări, achiziții, resurse umane, raportare consolidată.</p>
+                    <div class="service-features">
+                        <span class="feature-badge">Contabilitate</span>
+                        <span class="feature-badge">Stocuri</span>
+                        <span class="feature-badge">Vânzări</span>
+                        <span class="feature-badge">Raportare</span>
+                    </div>
+                </div>
+                <div class="service-done-card">
+                    <div class="service-done-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                        </svg>
+                    </div>
+                    <h3>Chatbots & Suport Automat</h3>
+                    <p>Chatbots inteligente pentru suport clienți, rezervări automate, FAQ, integrare cu sisteme existente. Disponibil 24/7, în mai multe limbi.</p>
+                    <div class="service-features">
+                        <span class="feature-badge">24/7 disponibil</span>
+                        <span class="feature-badge">Multi-limbă</span>
+                        <span class="feature-badge">Integrare API</span>
+                        <span class="feature-badge">AI powered</span>
+                    </div>
+                </div>
+                <div class="service-done-card">
+                    <div class="service-done-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <h3>Platforme de Cursuri Online</h3>
+                    <p>Sisteme complete pentru educație online: cursuri, teste, certificări, tracking progres, plăți, integrare video streaming.</p>
+                    <div class="service-features">
+                        <span class="feature-badge">Cursuri video</span>
+                        <span class="feature-badge">Teste & quiz</span>
+                        <span class="feature-badge">Certificări</span>
+                        <span class="feature-badge">Tracking progres</span>
+                    </div>
+                </div>
+                    </div>
+                </div>
+                <button class="carousel-btn carousel-next" aria-label="Next">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                </button>
+                <div class="carousel-dots"></div>
+                <div class="carousel-view-all">
+                    <a href="solutions.html" class="btn btn-secondary">Vezi Toate Soluțiile</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="proiecte" class="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Proiecte Realizate</h2>
+                <p class="section-subtitle">Soluții digitale care fac diferența</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-placeholder" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="9" y1="3" x2="9" y2="21"/>
+                                <line x1="3" y1="9" x2="21" y2="9"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Piese Utilaj</h3>
+                        <p>Platformă e-commerce pentru piese de utilaje, cu catalog extins, sistem de căutare avansat și integrare plăți.</p>
+                        <div class="project-tags">
+                            <span class="tag">E-commerce</span>
+                            <span class="tag">WooCommerce</span>
+                            <span class="tag">PayU</span>
+                        </div>
+                        <a href="https://www.piese-utilaj.ro" target="_blank" class="project-link">
+                            Vezi proiectul <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                <polyline points="15 3 21 3 21 9"/>
+                                <line x1="10" y1="14" x2="21" y2="3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-placeholder" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Plimbări pe Dunăre</h3>
+                        <p>Platformă de rezervări pentru croaziere pe Dunăre, cu sistem de booking, plăți online și gestionare calendar.</p>
+                        <div class="project-tags">
+                            <span class="tag">Booking</span>
+                            <span class="tag">Stripe</span>
+                            <span class="tag">Calendar</span>
+                        </div>
+                        <a href="https://www.plimbaripedunare.ro" target="_blank" class="project-link">
+                            Vezi proiectul <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                <polyline points="15 3 21 3 21 9"/>
+                                <line x1="10" y1="14" x2="21" y2="3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-placeholder" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                                <line x1="12" y1="18" x2="12" y2="18.01"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>TaskFlow Mobile</h3>
+                        <p>Aplicație mobile pentru gestionarea task-urilor și proiectelor, cu sincronizare în cloud și notificări push.</p>
+                        <div class="project-tags">
+                            <span class="tag">Mobile</span>
+                            <span class="tag">React Native</span>
+                            <span class="tag">Cloud Sync</span>
+                        </div>
+                        <a href="#" class="project-link">
+                            Vezi detalii <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                <polyline points="15 3 21 3 21 9"/>
+                                <line x1="10" y1="14" x2="21" y2="3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Site la Click Section -->
+    <section id="site-la-click" class="site-la-click">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Site la Click - Soluție Rapidă</h2>
+                <p class="section-subtitle">Ai nevoie de un site rapid? Oferim soluții complete de la 300 RON/lună</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Site Prezentare</h3>
+                        <div class="price">
+                            <span class="amount">300</span>
+                            <span class="currency">RON/lună</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Site cu 5-10 pagini</li>
+                        <li>✓ Design modern și responsive</li>
+                        <li>✓ Formular de contact</li>
+                        <li>✓ Integrare Google Maps</li>
+                        <li>✓ Suport tehnic inclus</li>
+                        <li>✓ Actualizări gratuite</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary choose-plan" data-plan="prezentare" data-price="300">Alege Planul</a>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="popular-badge">Cel Mai Popular</div>
+                    <div class="pricing-header">
+                        <h3>Magazin Online</h3>
+                        <div class="price">
+                            <span class="amount">500</span>
+                            <span class="currency">RON/lună</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Tot ce e în Site Prezentare</li>
+                        <li>✓ Catalog de produse nelimitat</li>
+                        <li>✓ Plăți online (PayU, Stripe)</li>
+                        <li>✓ Gestionare comenzi</li>
+                        <li>✓ Integrare curierat</li>
+                        <li>✓ Rapoarte vânzări</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary choose-plan" data-plan="magazin" data-price="500">Alege Planul</a>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Site Complex</h3>
+                        <div class="price">
+                            <span class="amount">1000</span>
+                            <span class="currency">RON/lună</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Tot ce e în Magazin Online</li>
+                        <li>✓ Integrare eMAG</li>
+                        <li>✓ Sistem de rezervări</li>
+                        <li>✓ Chatbot AI</li>
+                        <li>✓ Automatizări avansate</li>
+                        <li>✓ Suport prioritar</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary choose-plan" data-plan="complex" data-price="1000">Alege Planul</a>
+                </div>
+            </div>
+            <div class="pricing-note">
+                <p>💡 <strong>Toate planurile includ:</strong> hosting, domeniu, SSL, backup-uri zilnice, actualizări de securitate. Fără costuri ascunse!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Consultație Gratuită Section -->
+    <section id="consultatie" class="consultatie">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Consultație Gratuită - 40 de Minute</h2>
+                <p class="section-subtitle">Discutăm cu tine GRATIS despre proiectul tău. Programează o întâlnire online!</p>
+            </div>
+            <div class="consultatie-content">
+                <div class="consultatie-info">
+                    <div class="info-card">
+                        <div class="info-icon">🎯</div>
+                        <h3>Ce discutăm?</h3>
+                        <p>Înțelegem nevoile tale, analizăm proiectul și îți propunem cea mai bună soluție. Fără obligații, fără presiuni.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">⏱️</div>
+                        <h3>40 de minute</h3>
+                        <p>Întâlnire online pe Zoom sau Google Meet. Discutăm despre business-ul tău și cum te putem ajuta.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">💰</div>
+                        <h3>100% Gratuit</h3>
+                        <p>Nu plătești nimic pentru consultație. E o șansă să ne cunoaștem și să vedem dacă ne potrivim.</p>
+                    </div>
+                </div>
+                <div class="calendar-widget">
+                    <h3>Programează întâlnirea</h3>
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <button class="calendar-nav" id="prev-month">‹</button>
+                            <h4 id="current-month-year"></h4>
+                            <button class="calendar-nav" id="next-month">›</button>
+                        </div>
+                        <div class="calendar-grid" id="calendar-grid"></div>
+                        <div class="time-slots" id="time-slots">
+                            <p class="time-slots-label">Selectează o dată pentru a vedea orele disponibile</p>
+                        </div>
+                    </div>
+                    <form class="booking-form" id="booking-form">
+                        <input type="hidden" id="selected-date" name="date">
+                        <input type="hidden" id="selected-time" name="time">
+                        <div class="form-group">
+                            <input type="text" placeholder="Numele tău" required name="name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Email" required name="email">
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" placeholder="Telefon" required name="phone">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Programează Consultația</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Solutions Section -->
+    <section id="ai" class="ai-solutions">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Automatizări cu AI - Ușurează-ți Munca</h2>
+                <p class="section-subtitle">Folosim inteligență artificială pentru a face lucrurile automat, fără să te mai ocupi tu</p>
+            </div>
+            <div class="ai-content">
+                <div class="ai-intro">
+                    <h3>Ce înseamnă AI pentru tine?</h3>
+                    <p>
+                        <strong>AI = Inteligenta Artificială</strong> - e ca un angajat virtual care lucrează non-stop pentru tine.
+                        De exemplu: dacă ai un magazin online, AI-ul poate răspunde la întrebările clienților automat, 
+                        fără să stai tu la telefon. Sau poate procesa facturi și comenzi automat, fără să le introduci tu manual.
+                        <strong>Scopul e să ușureze munca ta și să facă totul mai rapid.</strong>
+                    </p>
+                </div>
+                <div class="ai-features">
+                    <div class="ai-feature">
+                        <div class="ai-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                <path d="M2 17l10 5 10-5"/>
+                                <path d="M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <h4>Chatbot pe Site</h4>
+                        <p>Un robot care răspunde la întrebările clienților pe site, 24/7. Nu mai trebuie să stai tu la telefon - chatbot-ul răspunde automat.</p>
+                    </div>
+                    <div class="ai-feature">
+                        <div class="ai-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                                <line x1="12" y1="22.08" x2="12" y2="12"/>
+                            </svg>
+                        </div>
+                        <h4>Automatizare Procese</h4>
+                        <p>Facem ca lucrurile să se întâmple singure. De exemplu: când vine o comandă, se trimite automat email clientului, se actualizează stocul, se trimite la curier - totul automat.</p>
+                    </div>
+                    <div class="ai-feature">
+                        <div class="ai-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                            </svg>
+                        </div>
+                        <h4>Analiză și Rapoarte</h4>
+                        <p>AI-ul analizează vânzările tale și îți spune ce produse se vând bine, când să mai comanzi stoc, ce clienți sunt fideli. Te ajută să iei decizii mai bune.</p>
+                    </div>
+                    <div class="ai-feature">
+                        <div class="ai-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 11l3 3L22 4"/>
+                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                            </svg>
+                        </div>
+                        <h4>Procesare Facturi</h4>
+                        <p>Primești o factură? O trimiți la sistem și AI-ul o citește automat, extrage datele și le introduce în sistem. Nu mai scrii tu manual.</p>
+                    </div>
+                    <div class="ai-feature">
+                        <div class="ai-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <h4>Recomandări Clienți</h4>
+                        <p>AI-ul vede ce cumpără fiecare client și le recomandă automat produse similare. Crește vânzările fără să faci tu nimic.</p>
+                    </div>
+                    <div class="ai-feature">
+                        <div class="ai-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                            </svg>
+                        </div>
+                        <h4>Integrări AI Avansate</h4>
+                        <p>Conectăm sistemul tău cu cele mai bune tehnologii AI de pe piață. Totul funcționează sigur și rapid, fără să te ocupi tu de nimic.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Hai să discutăm proiectul tău</h2>
+                <p class="section-subtitle">Suntem aici să transformăm ideile tale în realitate</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>contact@programatorultau.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Telefon</h4>
+                            <p>+40 XXX XXX XXX</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Numele tău" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Subiect">
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="5" placeholder="Mesajul tău" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Trimite Mesaj</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="footerLogoGradient" x1="0" y1="0" x2="52" y2="52">
+                                    <stop offset="0%" stop-color="#6366F1"/>
+                                    <stop offset="100%" stop-color="#8B5CF6"/>
+                                </linearGradient>
+                                <filter id="footerGlow">
+                                    <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <!-- Background rounded square with gradient -->
+                            <rect width="52" height="52" rx="14" fill="url(#footerLogoGradient)"/>
+                            <!-- Letter P - Bold modern style -->
+                            <path d="M14 10 L14 42 M14 10 L14 10 L26 10 Q34 10 34 18 Q34 24 28 24 L14 24" 
+                                  stroke="white" 
+                                  stroke-width="4" 
+                                  stroke-linecap="round" 
+                                  stroke-linejoin="round" 
+                                  fill="none"
+                                  filter="url(#footerGlow)"/>
+                            <!-- Golden accent dot -->
+                            <circle cx="36" cy="18" r="3.5" fill="#FFD700"/>
+                        </svg>
+                        <div class="logo-text">
+                            <span class="logo-main">Programatorul Tău</span>
+                            <span class="logo-domain">.com</span>
+                        </div>
+                    </div>
+                    <p>Transformăm ideile în soluții digitale de succes.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Servicii</h4>
+                        <ul>
+                            <li><a href="#servicii">Aplicații Mobile</a></li>
+                            <li><a href="#servicii">Integrări API</a></li>
+                            <li><a href="#servicii">E-commerce</a></li>
+                            <li><a href="#ai">Soluții AI</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Companie</h4>
+                        <ul>
+                            <li><a href="#proiecte">Proiecte</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Programatorul Tău. Toate drepturile rezervate.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Site la Click Wizard Modal -->
+    <div id="site-wizard-modal" class="modal">
+        <div class="modal-content wizard-content">
+            <button class="modal-close">&times;</button>
+            <div class="wizard-progress">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Plan</div>
+                </div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Culori</div>
+                </div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Layout</div>
+                </div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Detalii</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Plan Selection -->
+            <div class="wizard-step active" data-step="1">
+                <h2>Selectează Planul</h2>
+                <div class="plan-selection" id="plan-selection">
+                    <!-- Plan will be pre-selected based on button clicked -->
+                </div>
+            </div>
+
+            <!-- Step 2: Colors -->
+            <div class="wizard-step" data-step="2">
+                <h2>Alege Culorile</h2>
+                <div class="color-picker-section">
+                    <div class="color-group">
+                        <label>Culoare Principală (Header, Butoane)</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="primary-color" value="#6366F1" class="color-picker">
+                            <input type="text" id="primary-color-hex" value="#6366F1" class="color-hex">
+                        </div>
+                    </div>
+                    <div class="color-group">
+                        <label>Culoare Secundară (Accenturi)</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="secondary-color" value="#8B5CF6" class="color-picker">
+                            <input type="text" id="secondary-color-hex" value="#8B5CF6" class="color-hex">
+                        </div>
+                    </div>
+                    <div class="color-preview">
+                        <div class="preview-box" id="color-preview">
+                            <div class="preview-header">Header</div>
+                            <div class="preview-content">
+                                <button class="preview-btn">Buton</button>
+                                <div class="preview-accent">Accent</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Layout -->
+            <div class="wizard-step" data-step="3">
+                <h2>Configurează Layout-ul</h2>
+                <div class="layout-options">
+                    <div class="layout-option">
+                        <label>
+                            <input type="radio" name="header-position" value="top" checked>
+                            <span>Header sus (fixat)</span>
+                        </label>
+                    </div>
+                    <div class="layout-option">
+                        <label>
+                            <input type="radio" name="header-position" value="sticky">
+                            <span>Header sus (sticky la scroll)</span>
+                        </label>
+                    </div>
+                    <div class="layout-option">
+                        <label>
+                            <input type="checkbox" name="footer-visible" checked>
+                            <span>Footer vizibil</span>
+                        </label>
+                    </div>
+                    <div class="layout-option">
+                        <label>
+                            <input type="checkbox" name="sidebar-visible">
+                            <span>Sidebar (doar pentru plan Complex)</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Details -->
+            <div class="wizard-step" data-step="4">
+                <h2>Detalii Site</h2>
+                <div class="form-group">
+                    <label>Nume Site / Brand</label>
+                    <input type="text" id="site-name" placeholder="Ex: Magazinul Meu" required>
+                </div>
+                <div class="form-group">
+                    <label>Email pentru contact</label>
+                    <input type="email" id="site-email" placeholder="contact@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Telefon</label>
+                    <input type="tel" id="site-phone" placeholder="+40 XXX XXX XXX">
+                </div>
+                <div class="form-group">
+                    <label>Descriere scurtă (pentru SEO)</label>
+                    <textarea id="site-description" rows="3" placeholder="Descrie în câteva cuvinte ce face site-ul tău..."></textarea>
+                </div>
+            </div>
+
+            <div class="wizard-actions">
+                <button class="btn btn-secondary" id="wizard-prev" style="display: none;">Înapoi</button>
+                <button class="btn btn-primary" id="wizard-next">Următorul</button>
+                <button class="btn btn-primary" id="wizard-submit" style="display: none;">Generează Site</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Firebase config - Înlocuiește cu datele tale Firebase
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, getDocs, query, where, Timestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // TODO: Înlocuiește cu configurația ta Firebase
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Make Firebase available globally
+        window.firebaseApp = app;
+        window.firebaseDb = db;
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
