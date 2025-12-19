@@ -1,0 +1,209 @@
+# Backend API - Programatorul Tău
+
+Backend Node.js + Express + MySQL pentru sistemul de rezervări.
+
+## 🚀 Quick Start
+
+### 1. Instalează dependențele
+
+```bash
+cd backend
+npm install
+```
+
+### 2. Configurează MySQL
+
+1. Asigură-te că ai MySQL instalat și pornit
+2. Copiază `.env.example` ca `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+3. Editează `.env` cu datele tale MySQL:
+   ```env
+   DB_HOST=localhost
+   DB_PORT=3306
+   DB_USER=root
+   DB_PASSWORD=your_password
+   DB_NAME=programatorultau
+   ```
+
+### 3. Setup Database
+
+```bash
+npm run setup-db
+```
+
+Această comandă va:
+- Crea database-ul `programatorultau` (dacă nu există)
+- Crea tabelul `bookings` cu structura corectă
+
+### 4. Pornește serverul
+
+```bash
+# Development (cu auto-reload)
+npm run dev
+
+# Production
+npm start
+```
+
+Serverul va rula pe `http://localhost:3000`
+
+## 📡 API Endpoints
+
+### POST /api/bookings
+Creează o rezervare nouă
+
+**Request:**
+```json
+{
+  "date": "2024-01-15",
+  "time": "10:00",
+  "name": "Ion Popescu",
+  "email": "ion@example.com",
+  "phone": "+40 123 456 789"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Rezervare creată cu succes",
+  "data": {
+    "id": 1,
+    "date": "2024-01-15",
+    "time": "10:00",
+    "name": "Ion Popescu",
+    "email": "ion@example.com",
+    "phone": "+40 123 456 789"
+  }
+}
+```
+
+### GET /api/bookings?date=2024-01-15
+Obține rezervările pentru o dată specifică
+
+**Response:**
+```json
+{
+  "success": true,
+  "date": "2024-01-15",
+  "bookedSlots": ["10:00", "14:00"],
+  "bookings": [
+    {
+      "id": 1,
+      "date": "2024-01-15",
+      "time": "10:00",
+      "name": "Ion Popescu",
+      "email": "ion@example.com",
+      "phone": "+40 123 456 789",
+      "createdAt": "2024-01-14T12:30:00.000Z"
+    }
+  ]
+}
+```
+
+### GET /api/bookings/all
+Obține toate rezervările (pentru admin)
+
+**Query params:**
+- `limit` (default: 100)
+- `offset` (default: 0)
+
+### GET /health
+Health check endpoint
+
+## 🗄️ Database Schema
+
+### Table: bookings
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | INT | Primary key, auto increment |
+| date | DATE | Data rezervării (YYYY-MM-DD) |
+| time | VARCHAR(5) | Ora rezervării (HH:MM) |
+| name | VARCHAR(100) | Numele clientului |
+| email | VARCHAR(255) | Email client |
+| phone | VARCHAR(20) | Telefon client |
+| created_at | TIMESTAMP | Când s-a creat rezervarea |
+
+**Indexes:**
+- `unique_booking (date, time)` - Previne rezervări duplicate
+- `idx_date (date)` - Optimizează căutările pe dată
+- `idx_date_time (date, time)` - Optimizează căutările pe dată și oră
+
+## 🔧 Configuration
+
+Variabile de mediu (`.env`):
+
+```env
+PORT=3000
+NODE_ENV=development
+
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=programatorultau
+
+CORS_ORIGIN=http://localhost:8000
+```
+
+## 📁 Structura Proiectului
+
+```
+backend/
+├── config/
+│   └── database.js          # Database configuration
+├── controllers/
+│   └── bookingController.js  # Business logic
+├── models/
+│   └── Booking.js           # Database operations
+├── routes/
+│   └── bookings.js          # API routes
+├── scripts/
+│   └── setup-database.js    # Database setup script
+├── server.js                # Main server file
+├── package.json
+└── .env                     # Environment variables (not in git)
+```
+
+## 🛠️ Development
+
+### Auto-reload cu nodemon
+
+```bash
+npm run dev
+```
+
+### Testare API
+
+Poți testa API-ul cu:
+- **Postman**
+- **curl**:
+  ```bash
+  curl -X POST http://localhost:3000/api/bookings \
+    -H "Content-Type: application/json" \
+    -d '{"date":"2024-01-15","time":"10:00","name":"Test","email":"test@example.com","phone":"+40123456789"}'
+  ```
+
+## 🚨 Troubleshooting
+
+### Eroare: "Cannot connect to MySQL"
+- Verifică că MySQL este pornit
+- Verifică credențialele din `.env`
+- Verifică că portul 3306 este deschis
+
+### Eroare: "Database doesn't exist"
+- Rulează `npm run setup-db`
+
+### Eroare: "Table doesn't exist"
+- Rulează `npm run setup-db`
+
+## 🔒 Security Notes
+
+- Nu commita `.env` în Git (e deja în `.gitignore`)
+- Pentru producție, folosește variabile de mediu sigure
+- Consideră adăugarea autentificării pentru endpoint-ul `/api/bookings/all`
+
