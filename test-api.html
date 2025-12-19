@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API</title>
+</head>
+<body>
+    <h1>Test Backend API</h1>
+    <button onclick="testAPI()">Test API</button>
+    <div id="result"></div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:3000/api';
+
+        async function testAPI() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+
+            try {
+                // Test 1: Health check
+                console.log('1. Testing health endpoint...');
+                const healthResponse = await fetch('http://localhost:3000/health');
+                const healthData = await healthResponse.json();
+                console.log('Health:', healthData);
+
+                // Test 2: Get bookings
+                console.log('2. Testing bookings endpoint...');
+                const date = '2024-12-20';
+                const bookingsResponse = await fetch(`${API_BASE_URL}/bookings?date=${date}`);
+                const bookingsData = await bookingsResponse.json();
+                console.log('Bookings:', bookingsData);
+
+                // Test 3: Create booking
+                console.log('3. Testing create booking...');
+                const createResponse = await fetch(`${API_BASE_URL}/bookings`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        date: '2024-12-21',
+                        time: '14:00',
+                        name: 'Test Frontend',
+                        email: 'test@frontend.com',
+                        phone: '+40 999 999 999'
+                    })
+                });
+                const createData = await createResponse.json();
+                console.log('Create result:', createData);
+
+                resultDiv.innerHTML = `
+                    <h2>✅ All tests passed!</h2>
+                    <p><strong>Health:</strong> ${JSON.stringify(healthData)}</p>
+                    <p><strong>Bookings for ${date}:</strong> ${JSON.stringify(bookingsData.bookedSlots)}</p>
+                    <p><strong>Create booking:</strong> ${createData.success ? '✅ Success' : '❌ Failed'}</p>
+                    <p>Check console (F12) for details</p>
+                `;
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `
+                    <h2>❌ Error!</h2>
+                    <p>${error.message}</p>
+                    <p>Check console (F12) for details</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
+

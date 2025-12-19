@@ -13,7 +13,7 @@ Programatorul Tău este o platformă web modernă care oferă:
 ## 🚀 Tehnologii
 
 - **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **Backend**: Firebase (Firestore Database)
+- **Backend**: Node.js + Express + MySQL
 - **Fonts**: Google Fonts (Inter)
 - **Icons**: SVG custom
 
@@ -25,7 +25,7 @@ programatorultau/
 ├── solutions.html      # Pagina cu soluții
 ├── script.js          # Logica JavaScript
 ├── styles.css         # Stiluri CSS
-├── FIREBASE_SETUP.md  # Ghid de configurare Firebase
+├── BACKEND_SETUP.md   # Ghid de configurare Backend
 └── README.md          # Documentație proiect
 ```
 
@@ -38,9 +38,19 @@ git clone https://github.com/alexndrfrd/programatorultau.git
 cd programatorultau
 ```
 
-### 2. Configurează Firebase
+### 2. Configurează Backend-ul
 
-Urmează instrucțiunile din [FIREBASE_SETUP.md](./FIREBASE_SETUP.md) pentru a configura Firebase.
+Urmează instrucțiunile din [BACKEND_SETUP.md](./BACKEND_SETUP.md) pentru a configura backend-ul Node.js + MySQL.
+
+**Quick start:**
+```bash
+cd backend
+npm install
+cp .env.example .env
+# Editează .env cu datele tale MySQL
+npm run setup-db
+npm run dev
+```
 
 ### 3. Deschide în browser
 
@@ -64,7 +74,7 @@ Apoi accesează `http://localhost:8000` în browser.
 ### Calendar de Rezervări
 - Selectare dată și oră
 - Validare disponibilitate
-- Salvare în Firebase Firestore
+- Salvare în MySQL Database
 
 ### Generator de Site-uri
 - **Plan 1**: Site simplu (predefinit)
@@ -77,13 +87,19 @@ Apoi accesează `http://localhost:8000` în browser.
 - Toggle footer și sidebar
 - Informații despre site (nume, email, telefon, descriere)
 
-## 📝 Configurare Firebase
+## 📝 Configurare Backend
 
-Proiectul folosește Firebase Firestore pentru:
-- **Colecția `bookings`**: Rezervările de calendar
-- **Colecția `site-requests`**: Cererile de site-uri
+Proiectul folosește **Node.js + Express + MySQL** pentru backend:
+- **REST API**: Endpoints pentru rezervări
+- **MySQL Database**: Stocare persistentă a datelor
+- **Clean Architecture**: Cod organizat și scalabil
 
-Vezi [FIREBASE_SETUP.md](./FIREBASE_SETUP.md) pentru detalii complete.
+Vezi [BACKEND_SETUP.md](./BACKEND_SETUP.md) pentru setup complet.
+
+**API Endpoints:**
+- `POST /api/bookings` - Creează rezervare
+- `GET /api/bookings?date=YYYY-MM-DD` - Obține rezervări pentru o dată
+- `GET /api/bookings/all` - Obține toate rezervările (admin)
 
 ## 🎨 Personalizare
 

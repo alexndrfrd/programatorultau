@@ -333,7 +333,11 @@ function selectDate(date, element) {
     });
     element.classList.add('selected');
     selectedDate = date;
-    document.getElementById('selected-date').value = date.toISOString().split('T')[0];
+    // Formatează data locală (nu UTC) pentru input hidden
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    document.getElementById('selected-date').value = `${year}-${month}-${day}`;
     renderTimeSlots();
 }
 
@@ -403,33 +407,6 @@ if (document.getElementById('calendar-grid')) {
 
 // Booking Form Handler
 const bookingForm = document.getElementById('booking-form');
-if (bookingForm) {
-    bookingForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        if (!selectedDate || !selectedTime) {
-            alert('Te rugăm să selectezi o dată și o oră!');
-            return;
-        }
-
-        const formData = new FormData(bookingForm);
-        const data = Object.fromEntries(formData);
-        
-        // Here you would send to server
-        alert(`Mulțumim! Ai programat consultația pentru ${selectedDate.toLocaleDateString('ro-RO')} la ${selectedTime}. Vă vom contacta în curând pentru confirmare!`);
-        
-        bookingForm.reset();
-        selectedDate = null;
-        selectedTime = null;
-        renderTimeSlots();
-        document.querySelectorAll('.calendar-day').forEach(day => {
-            day.classList.remove('selected');
-        });
-        document.querySelectorAll('.time-slot').forEach(slot => {
-            slot.classList.remove('selected');
-        });
-    });
-}
 
 // 3D Card Tilt Effect
 const cards = document.querySelectorAll('.service-card, .pricing-card, .project-card');
@@ -819,81 +796,53 @@ Telefon: ${config.sitePhone || 'N/A'}
 Descriere: ${config.siteDescription || 'N/A'}
     `.trim();
 
-    // Option 1: Use EmailJS (you need to set it up)
-    // Option 2: Use mailto (simple but limited)
-    // Option 3: Send to Firebase and process with Cloud Functions
-    
-    // For now, let's use a mailto link as fallback
+    // Send site request via email (mailto)
     const mailtoLink = `mailto:contact@programatorultau.com?subject=Cerere Site ${planNames[config.plan]}&body=${encodeURIComponent(emailBody)}`;
-    
-    // Try to use Firebase if available
-    if (window.firebaseDb) {
-        try {
-            const { collection, addDoc } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
-            await addDoc(collection(window.firebaseDb, 'site-requests'), {
-                ...config,
-                createdAt: new Date()
-            });
-            alert('Cererea ta a fost trimisă! Vă vom contacta în curând la ' + config.siteEmail);
-            closeWizard();
-            return;
-        } catch (error) {
-            console.error('Firebase error:', error);
-        }
-    }
-    
-    // Fallback to mailto
     window.location.href = mailtoLink;
     alert('Cererea ta a fost pregătită! Vă vom contacta în curând la ' + config.siteEmail);
     closeWizard();
 }
 
-// Firebase Calendar Integration
+// Backend API Configuration
+// Configurează URL-ul backend-ului aici
+const API_BASE_URL = 'http://localhost:3000/api'; // Schimbă pentru producție
+
+/**
+ * Încarcă sloturile ocupate pentru o dată specifică din backend
+ */
 async function loadBookedSlots(date) {
-    if (!window.firebaseDb) {
-        // Fallback: no booked slots if Firebase not configured
-        console.warn('Firebase not configured. Booked slots will not be displayed.');
-        return [];
-    }
-
     try {
-        const { collection, getDocs, query, where, Timestamp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+        // Formatează data ca YYYY-MM-DD (folosind data locală, nu UTC)
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const dateStr = `${year}-${month}-${day}`;
+        console.log('📅 Loading booked slots for date:', dateStr, '(local date)');
         
-        // Get booked slots for this date
-        // Normalize date to start of day for comparison
-        const dateStart = new Date(date);
-        dateStart.setHours(0, 0, 0, 0);
-        const dateEnd = new Date(date);
-        dateEnd.setHours(23, 59, 59, 999);
-
-        const q = query(
-            collection(window.firebaseDb, 'bookings'),
-            where('date', '>=', Timestamp.fromDate(dateStart)),
-            where('date', '<=', Timestamp.fromDate(dateEnd))
-        );
-
-        const snapshot = await getDocs(q);
-        const bookedSlots = [];
-        snapshot.forEach(doc => {
-            const data = doc.data();
-            if (data.time) {
-                bookedSlots.push(data.time);
-            }
-        });
-
-        console.log(`Found ${bookedSlots.length} booked slots for ${date.toLocaleDateString('ro-RO')}:`, bookedSlots);
-        return bookedSlots;
-    } catch (error) {
-        console.error('Error loading booked slots:', error);
-        // If Firebase is not properly configured, return empty array
-        if (error.code === 'failed-precondition' || error.code === 'permission-denied') {
-            console.warn('Firebase permissions issue. Check your Firestore rules.');
+        // Face request la backend API
+        const response = await fetch(`${API_BASE_URL}/bookings?date=${dateStr}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            console.log(`✅ Found ${result.bookedSlots.length} booked slots for ${dateStr}:`, result.bookedSlots);
+            return result.bookedSlots || [];
+        } else {
+            console.error('❌ Error from API:', result.message);
+            return [];
+        }
+    } catch (error) {
+        console.error('❌ Error loading booked slots:', error);
+        // Dacă backend-ul nu e disponibil, returnează array gol (toate sloturile disponibile)
         return [];
     }
 }
 
-// Update renderTimeSlots to use Firebase and show booked slots
+// Update renderTimeSlots to show booked slots from backend
 const originalRenderTimeSlots = renderTimeSlots;
 renderTimeSlots = async function() {
     const timeSlotsContainer = document.getElementById('time-slots');
@@ -907,7 +856,7 @@ renderTimeSlots = async function() {
     // Show loading state
     timeSlotsContainer.innerHTML = '<p class="time-slots-label">Se încarcă sloturile...</p>';
     
-    // Get booked slots from Firebase
+    // Get booked slots from backend API
     const bookedSlots = await loadBookedSlots(selectedDate);
     
     // All possible slots
@@ -941,61 +890,115 @@ renderTimeSlots = async function() {
     }
 };
 
-// Update booking form to save to Firebase
-const originalBookingSubmit = bookingForm?.addEventListener;
+// Update booking form to save to backend
+let isSubmitting = false; // Flag pentru a preveni double submit
 if (bookingForm) {
     bookingForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+        // Previne double submit
+        if (isSubmitting) {
+            console.log('⚠️ Submit already in progress, ignoring...');
+            return;
+        }
         
         if (!selectedDate || !selectedTime) {
             alert('Te rugăm să selectezi o dată și o oră!');
             return;
         }
+        
+        isSubmitting = true; // Marchează că submit-ul e în progres
 
         const formData = new FormData(bookingForm);
         const data = Object.fromEntries(formData);
         
-        // Save to Firebase if available
-        if (window.firebaseDb) {
-            try {
-                const { collection, addDoc, Timestamp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+        // Save to backend API
+        try {
+            console.log('💾 Attempting to save booking to backend...');
+            
+            // Formatează data ca YYYY-MM-DD (folosind data locală, nu UTC)
+            const year = selectedDate.getFullYear();
+            const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+            const day = String(selectedDate.getDate()).padStart(2, '0');
+            const dateStr = `${year}-${month}-${day}`;
+            
+            const bookingData = {
+                date: dateStr,
+                time: selectedTime,
+                name: data.name,
+                email: data.email,
+                phone: data.phone
+            };
+            
+            console.log('📝 Booking data:', bookingData);
+            
+            // Trimite datele la backend API
+            const response = await fetch(`${API_BASE_URL}/bookings`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(bookingData)
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                console.log('✅ Booking saved successfully:', result.data);
                 
-                // Normalize date to start of day for consistent storage
-                const bookingDate = new Date(selectedDate);
-                bookingDate.setHours(0, 0, 0, 0);
+                // Salvează datele înainte de reset (pentru mesaj)
+                const savedDate = selectedDate;
+                const savedTime = selectedTime;
                 
-                await addDoc(collection(window.firebaseDb, 'bookings'), {
-                    name: data.name,
-                    email: data.email,
-                    phone: data.phone,
-                    date: Timestamp.fromDate(bookingDate),
-                    time: selectedTime,
-                    createdAt: Timestamp.now()
+                // Reset form și selecții
+                bookingForm.reset();
+                selectedDate = null;
+                selectedTime = null;
+                
+                // Reset UI
+                document.querySelectorAll('.calendar-day').forEach(day => {
+                    day.classList.remove('selected');
+                });
+                document.querySelectorAll('.time-slot').forEach(slot => {
+                    slot.classList.remove('selected');
                 });
                 
-                alert(`Mulțumim! Ai programat consultația pentru ${selectedDate.toLocaleDateString('ro-RO')} la ${selectedTime}. Vă vom contacta în curând pentru confirmare!`);
+                // Reset time slots display
+                const timeSlotsContainer = document.getElementById('time-slots');
+                if (timeSlotsContainer) {
+                    timeSlotsContainer.innerHTML = '<p class="time-slots-label">Selectează o dată pentru a vedea orele disponibile</p>';
+                }
                 
-                // Refresh time slots to show the new booking
-                await renderTimeSlots();
-            } catch (error) {
-                console.error('Error saving booking:', error);
-                alert('Eroare la salvarea rezervării. Te rugăm să încerci din nou sau să ne contactezi direct.');
+                // Afișează mesajul de succes
+                alert(`Mulțumim! Ai programat consultația pentru ${savedDate.toLocaleDateString('ro-RO')} la ${savedTime}. Vă vom contacta în curând pentru confirmare!`);
+                
+                isSubmitting = false; // Reset flag după succes
+                return; // Ieșim din funcție după succes
+            } else {
+                // Handle specific error messages
+                isSubmitting = false; // Reset flag la eroare
+                if (response.status === 409) {
+                    alert('⚠️ Acest slot este deja rezervat. Te rugăm să alegi alt slot.');
+                } else {
+                    throw new Error(result.message || 'Unknown error');
+                }
                 return;
             }
-        } else {
-            alert('⚠️ Firebase nu este configurat. Rezervarea nu a fost salvată. Te rugăm să configurezi Firebase sau să ne contactezi direct.');
+        } catch (error) {
+            console.error('❌ Error saving booking:', error);
+            isSubmitting = false; // Reset flag la eroare
+            
+            // Fallback: trimite prin mailto dacă backend-ul nu e disponibil
+            if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                console.warn('⚠️ Backend not available, using mailto fallback');
+                const mailtoLink = `mailto:contact@programatorultau.com?subject=Rezervare Consultație&body=Nume: ${data.name}%0AEmail: ${data.email}%0ATelefon: ${data.phone}%0AData: ${selectedDate.toLocaleDateString('ro-RO')}%0AOra: ${selectedTime}`;
+                window.location.href = mailtoLink;
+                alert(`Mulțumim! Ai programat consultația pentru ${selectedDate.toLocaleDateString('ro-RO')} la ${selectedTime}. Vă vom contacta în curând pentru confirmare!`);
+            } else {
+                alert('⚠️ Eroare la salvarea rezervării: ' + error.message + '\n\nTe rugăm să încerci din nou sau să ne contactezi direct.');
+            }
+            return;
         }
-        
-        bookingForm.reset();
-        selectedDate = null;
-        selectedTime = null;
-        await renderTimeSlots();
-        document.querySelectorAll('.calendar-day').forEach(day => {
-            day.classList.remove('selected');
-        });
-        document.querySelectorAll('.time-slot').forEach(slot => {
-            slot.classList.remove('selected');
-        });
     });
 }
 
