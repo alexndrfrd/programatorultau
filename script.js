@@ -849,16 +849,18 @@ Descriere: ${config.siteDescription || 'N/A'}
 }
 
 // Firebase Calendar Integration
-async function loadAvailableSlots(date) {
+async function loadBookedSlots(date) {
     if (!window.firebaseDb) {
-        // Fallback: use hardcoded available slots
-        return ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
+        // Fallback: no booked slots if Firebase not configured
+        console.warn('Firebase not configured. Booked slots will not be displayed.');
+        return [];
     }
 
     try {
         const { collection, getDocs, query, where, Timestamp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
         
         // Get booked slots for this date
+        // Normalize date to start of day for comparison
         const dateStart = new Date(date);
         dateStart.setHours(0, 0, 0, 0);
         const dateEnd = new Date(date);
@@ -879,18 +881,19 @@ async function loadAvailableSlots(date) {
             }
         });
 
-        // All available slots
-        const allSlots = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
-        
-        // Return available slots (not booked)
-        return allSlots.filter(slot => !bookedSlots.includes(slot));
+        console.log(`Found ${bookedSlots.length} booked slots for ${date.toLocaleDateString('ro-RO')}:`, bookedSlots);
+        return bookedSlots;
     } catch (error) {
-        console.error('Error loading slots:', error);
-        return ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
+        console.error('Error loading booked slots:', error);
+        // If Firebase is not properly configured, return empty array
+        if (error.code === 'failed-precondition' || error.code === 'permission-denied') {
+            console.warn('Firebase permissions issue. Check your Firestore rules.');
+        }
+        return [];
     }
 }
 
-// Update renderTimeSlots to use Firebase
+// Update renderTimeSlots to use Firebase and show booked slots
 const originalRenderTimeSlots = renderTimeSlots;
 renderTimeSlots = async function() {
     const timeSlotsContainer = document.getElementById('time-slots');
@@ -901,22 +904,41 @@ renderTimeSlots = async function() {
         return;
     }
 
-    const availableSlots = await loadAvailableSlots(selectedDate);
+    // Show loading state
+    timeSlotsContainer.innerHTML = '<p class="time-slots-label">Se încarcă sloturile...</p>';
+    
+    // Get booked slots from Firebase
+    const bookedSlots = await loadBookedSlots(selectedDate);
+    
+    // All possible slots
+    const allSlots = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
+    
     timeSlotsContainer.innerHTML = '';
     timeSlotsContainer.classList.remove('time-slots-label');
 
-    if (availableSlots.length === 0) {
-        timeSlotsContainer.innerHTML = '<p class="time-slots-label">Nu sunt sloturi disponibile pentru această dată</p>';
-        return;
-    }
-
-    availableSlots.forEach(time => {
+    // Render all slots, marking booked ones as disabled
+    allSlots.forEach(time => {
         const slotEl = document.createElement('div');
-        slotEl.className = 'time-slot';
+        const isBooked = bookedSlots.includes(time);
+        
+        slotEl.className = 'time-slot' + (isBooked ? ' booked' : '');
         slotEl.textContent = time;
-        slotEl.addEventListener('click', () => selectTime(time, slotEl));
+        
+        if (isBooked) {
+            slotEl.title = 'Acest slot este deja rezervat';
+            slotEl.style.cursor = 'not-allowed';
+            slotEl.style.opacity = '0.5';
+        } else {
+            slotEl.addEventListener('click', () => selectTime(time, slotEl));
+        }
+        
         timeSlotsContainer.appendChild(slotEl);
     });
+    
+    // If all slots are booked
+    if (bookedSlots.length === allSlots.length) {
+        timeSlotsContainer.innerHTML = '<p class="time-slots-label">Nu sunt sloturi disponibile pentru această dată</p>';
+    }
 };
 
 // Update booking form to save to Firebase
@@ -937,27 +959,37 @@ if (bookingForm) {
         if (window.firebaseDb) {
             try {
                 const { collection, addDoc, Timestamp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+                
+                // Normalize date to start of day for consistent storage
+                const bookingDate = new Date(selectedDate);
+                bookingDate.setHours(0, 0, 0, 0);
+                
                 await addDoc(collection(window.firebaseDb, 'bookings'), {
                     name: data.name,
                     email: data.email,
                     phone: data.phone,
-                    date: Timestamp.fromDate(selectedDate),
+                    date: Timestamp.fromDate(bookingDate),
                     time: selectedTime,
                     createdAt: Timestamp.now()
                 });
+                
                 alert(`Mulțumim! Ai programat consultația pentru ${selectedDate.toLocaleDateString('ro-RO')} la ${selectedTime}. Vă vom contacta în curând pentru confirmare!`);
+                
+                // Refresh time slots to show the new booking
+                await renderTimeSlots();
             } catch (error) {
                 console.error('Error saving booking:', error);
-                alert(`Mulțumim! Ai programat consultația pentru ${selectedDate.toLocaleDateString('ro-RO')} la ${selectedTime}. Vă vom contacta în curând pentru confirmare!`);
+                alert('Eroare la salvarea rezervării. Te rugăm să încerci din nou sau să ne contactezi direct.');
+                return;
             }
         } else {
-            alert(`Mulțumim! Ai programat consultația pentru ${selectedDate.toLocaleDateString('ro-RO')} la ${selectedTime}. Vă vom contacta în curând pentru confirmare!`);
+            alert('⚠️ Firebase nu este configurat. Rezervarea nu a fost salvată. Te rugăm să configurezi Firebase sau să ne contactezi direct.');
         }
         
         bookingForm.reset();
         selectedDate = null;
         selectedTime = null;
-        renderTimeSlots();
+        await renderTimeSlots();
         document.querySelectorAll('.calendar-day').forEach(day => {
             day.classList.remove('selected');
         });

@@ -11,6 +11,20 @@
    - În Firebase Console, mergi la "Firestore Database"
    - Click "Create Database"
    - Alege "Start in test mode" (poți restricționa accesul mai târziu)
+   - **IMPORTANT**: Pentru producție, actualizează regulile Firestore:
+     ```javascript
+     rules_version = '2';
+     service cloud.firestore {
+       match /databases/{database}/documents {
+         match /bookings/{bookingId} {
+           allow read, write: if true; // Pentru test - restricționează pentru producție!
+         }
+         match /site-requests/{requestId} {
+           allow read, write: if true; // Pentru test - restricționează pentru producție!
+         }
+       }
+     }
+     ```
 
 3. **Obține configurația:**
    - Mergi la Project Settings (iconița de roată)
@@ -33,8 +47,11 @@
    ```
 
 5. **Creează colecțiile în Firestore:**
+   - Colecțiile se creează automat când primești prima rezervare
    - `bookings` - pentru rezervările de calendar
    - `site-requests` - pentru cererile de site (plan 2 & 3)
+   
+   **Nu trebuie să le creezi manual** - se creează automat la prima utilizare!
 
 ## Structura datelor:
 

@@ -2102,6 +2102,31 @@ section {
     cursor: not-allowed;
 }
 
+.time-slot.booked {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--bg-tertiary);
+    border-color: var(--border);
+    color: var(--text-secondary);
+    position: relative;
+}
+
+.time-slot.booked::after {
+    content: '✕';
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    font-size: 0.7rem;
+    color: var(--error, #ef4444);
+}
+
+.time-slot.booked:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border-color: var(--border);
+    transform: none;
+}
+
 .booking-form {
     display: flex;
     flex-direction: column;
