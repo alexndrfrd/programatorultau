@@ -2,8 +2,12 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
+const logger = require('./config/logger');
 const { testConnection } = require('./config/database');
 const bookingsRouter = require('./routes/bookings');
+const logsRouter = require('./routes/logs');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,7 +20,37 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Request logging middleware (before routes)
+app.use((req, res, next) => {
+    logger.info(`${req.method} ${req.path}`, {
+        ip: req.ip,
+        userAgent: req.get('user-agent')
+    });
+    next();
+});
+
 // Health check endpoint
+/**
+ * @swagger
+ * /health:
+ *   get:
+ *     summary: Health check endpoint
+ *     tags: [Health]
+ *     responses:
+ *       200:
+ *         description: Server is running
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: ok
+ *                 timestamp:
+ *                   type: string
+ *                   format: date-time
+ */
 app.get('/health', (req, res) => {
     res.json({
         status: 'ok',
@@ -24,8 +58,15 @@ app.get('/health', (req, res) => {
     });
 });
 
+// Swagger documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'Programatorul Tău API Docs'
+}));
+
 // API Routes
 app.use('/api/bookings', bookingsRouter);
+app.use('/api/logs', logsRouter);
 
 // 404 handler
 app.use((req, res) => {
@@ -37,31 +78,53 @@ app.use((req, res) => {
 
 // Error handler
 app.use((err, req, res, next) => {
-    console.error('Error:', err);
-    res.status(500).json({
+    logger.error('Unhandled error', {
+        error: err.message,
+        stack: err.stack,
+        path: req.path,
+        method: req.method,
+        ip: req.ip
+    });
+    
+    res.status(err.status || 500).json({
         success: false,
-        message: 'Internal server error',
-        error: process.env.NODE_ENV === 'development' ? err.message : undefined
+        message: err.message || 'Internal server error',
+        error: process.env.NODE_ENV === 'development' ? err.stack : undefined
     });
 });
 
 // Start server
 async function startServer() {
-    // Test database connection
-    const dbConnected = await testConnection();
-    
-    if (!dbConnected) {
-        console.error('❌ Cannot start server without database connection');
-        console.log('💡 Make sure MySQL is running and .env is configured correctly');
+    try {
+        // Test database connection
+        logger.info('Testing database connection...');
+        const dbConnected = await testConnection();
+        
+        if (!dbConnected) {
+            logger.error('Cannot start server without database connection');
+            logger.info('Make sure MySQL is running and .env is configured correctly');
+            process.exit(1);
+        }
+
+        app.listen(PORT, () => {
+            logger.info(`Server started successfully`, {
+                port: PORT,
+                environment: process.env.NODE_ENV || 'development',
+                apiUrl: `http://localhost:${PORT}/api`,
+                healthCheck: `http://localhost:${PORT}/health`
+            });
+        });
+    } catch (error) {
+        logger.error('Failed to start server', { error: error.message, stack: error.stack });
         process.exit(1);
     }
-
-    app.listen(PORT, () => {
-        console.log(`🚀 Server running on http://localhost:${PORT}`);
-        console.log(`📡 API available at http://localhost:${PORT}/api`);
-        console.log(`🏥 Health check: http://localhost:${PORT}/health`);
-    });
 }
 
-startServer();
+// Export app for testing
+module.exports = app;
+
+// Start server only if not in test environment
+if (require.main === module) {
+    startServer();
+}
 

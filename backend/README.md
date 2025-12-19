@@ -49,6 +49,16 @@ npm start
 
 Serverul va rula pe `http://localhost:3000`
 
+**Swagger UI** va fi disponibil la: `http://localhost:3000/api-docs`
+
+## 📚 Documentation
+
+- **[API Documentation](./API_DOCS.md)** - Complete API reference
+- **[Swagger UI](http://localhost:3000/api-docs)** - Interactive API documentation
+- **[Logging Guide](./LOGGING.md)** - How to read and use logs
+- **[Monitoring Guide](./MONITORING.md)** - Logs API și vizualizare loguri
+- **[Testing Guide](./tests/README.md)** - How to run and write tests
+
 ## 📡 API Endpoints
 
 ### POST /api/bookings
@@ -177,6 +187,19 @@ backend/
 npm run dev
 ```
 
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run with coverage
+npm test -- --coverage
+
+# Watch mode
+npm run test:watch
+```
+
 ### Testare API
 
 Poți testa API-ul cu:
@@ -187,6 +210,16 @@ Poți testa API-ul cu:
     -H "Content-Type: application/json" \
     -d '{"date":"2024-01-15","time":"10:00","name":"Test","email":"test@example.com","phone":"+40123456789"}'
   ```
+
+### Viewing Logs
+
+```bash
+# View all logs
+tail -f logs/combined.log
+
+# View only errors
+tail -f logs/error.log
+```
 
 ## 🚨 Troubleshooting
 

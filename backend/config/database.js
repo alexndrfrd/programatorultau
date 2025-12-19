@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
+const logger = require('./logger');
 
 /**
  * Database configuration and connection pool
@@ -24,11 +25,15 @@ const pool = mysql.createPool(dbConfig);
 async function testConnection() {
     try {
         const connection = await pool.getConnection();
-        console.log('✅ Database connected successfully');
+        logger.info('Database connected successfully');
         connection.release();
         return true;
     } catch (error) {
-        console.error('❌ Database connection error:', error.message);
+        logger.error('Database connection error', {
+            error: error.message,
+            stack: error.stack,
+            code: error.code
+        });
         return false;
     }
 }
@@ -38,10 +43,16 @@ async function testConnection() {
  */
 async function query(sql, params = []) {
     try {
+        logger.debug('Executing database query', { sql: sql.substring(0, 100), params });
         const [results] = await pool.execute(sql, params);
         return results;
     } catch (error) {
-        console.error('Database query error:', error);
+        logger.error('Database query error', {
+            error: error.message,
+            stack: error.stack,
+            sql: sql.substring(0, 100),
+            params
+        });
         throw error;
     }
 }

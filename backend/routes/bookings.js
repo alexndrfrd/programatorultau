@@ -28,10 +28,141 @@ const bookingValidation = [
 ];
 
 /**
- * Routes
+ * @swagger
+ * /api/bookings:
+ *   post:
+ *     summary: Create a new booking
+ *     tags: [Bookings]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Booking'
+ *           example:
+ *             date: "2024-12-20"
+ *             time: "10:00"
+ *             name: "Ion Popescu"
+ *             email: "ion@example.com"
+ *             phone: "+40 123 456 789"
+ *     responses:
+ *       201:
+ *         description: Booking created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Rezervare creată cu succes"
+ *                 data:
+ *                   $ref: '#/components/schemas/Booking'
+ *       400:
+ *         $ref: '#/components/responses/ValidationError'
+ *       409:
+ *         description: Slot already booked
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         $ref: '#/components/responses/ServerError'
  */
 router.post('/', bookingValidation, BookingController.create);
+
+/**
+ * @swagger
+ * /api/bookings:
+ *   get:
+ *     summary: Get bookings for a specific date
+ *     tags: [Bookings]
+ *     parameters:
+ *       - in: query
+ *         name: date
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: date
+ *           example: "2024-12-20"
+ *         description: Date in YYYY-MM-DD format
+ *     responses:
+ *       200:
+ *         description: List of bookings for the date
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 date:
+ *                   type: string
+ *                   example: "2024-12-20"
+ *                 bookedSlots:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: ["10:00", "14:00"]
+ *                 bookings:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Booking'
+ *       400:
+ *         description: Missing or invalid date parameter
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         $ref: '#/components/responses/ServerError'
+ */
 router.get('/', BookingController.getByDate);
+
+/**
+ * @swagger
+ * /api/bookings/all:
+ *   get:
+ *     summary: Get all bookings (admin endpoint)
+ *     tags: [Bookings]
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 100
+ *         description: Number of results to return
+ *       - in: query
+ *         name: offset
+ *         schema:
+ *           type: integer
+ *           default: 0
+ *         description: Pagination offset
+ *     responses:
+ *       200:
+ *         description: List of all bookings
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 count:
+ *                   type: integer
+ *                   example: 10
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Booking'
+ *       500:
+ *         $ref: '#/components/responses/ServerError'
+ */
 router.get('/all', BookingController.getAll);
 
 module.exports = router;
