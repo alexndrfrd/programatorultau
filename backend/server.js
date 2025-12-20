@@ -6,8 +6,11 @@ const logger = require('./config/logger');
 const { testConnection } = require('./config/database');
 const bookingsRouter = require('./routes/bookings');
 const logsRouter = require('./routes/logs');
+const contactRouter = require('./routes/contact');
+const templatesRouter = require('./routes/templates');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
+const emailService = require('./services/emailService');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -67,6 +70,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
 // API Routes
 app.use('/api/bookings', bookingsRouter);
 app.use('/api/logs', logsRouter);
+app.use('/api/contact', contactRouter);
+app.use('/api/templates', templatesRouter);
 
 // 404 handler
 app.use((req, res) => {
@@ -106,13 +111,20 @@ async function startServer() {
             process.exit(1);
         }
 
-        app.listen(PORT, () => {
+        app.listen(PORT, async () => {
             logger.info(`Server started successfully`, {
                 port: PORT,
                 environment: process.env.NODE_ENV || 'development',
                 apiUrl: `http://localhost:${PORT}/api`,
                 healthCheck: `http://localhost:${PORT}/health`
             });
+
+            // Verify email service configuration
+            const emailConfigured = await emailService.verify();
+            if (!emailConfigured) {
+                logger.warn('Email service not configured. Email notifications will be disabled.');
+                logger.info('To enable emails, configure SMTP settings in .env file');
+            }
         });
     } catch (error) {
         logger.error('Failed to start server', { error: error.message, stack: error.stack });

@@ -1,6 +1,7 @@
 const Booking = require('../models/Booking');
 const { validationResult } = require('express-validator');
 const logger = require('../config/logger');
+const emailService = require('../services/emailService');
 
 /**
  * Booking Controller
@@ -47,6 +48,15 @@ class BookingController {
             });
 
             logger.info('Booking created successfully', { bookingId: booking.id, date, time });
+
+            // Send emails asynchronously (don't wait for them)
+            emailService.sendClientConfirmation(booking).catch(err => {
+                logger.error('Failed to send client confirmation email', { error: err.message });
+            });
+            
+            emailService.sendAdminNotification(booking).catch(err => {
+                logger.error('Failed to send admin notification email', { error: err.message });
+            });
 
             res.status(201).json({
                 success: true,

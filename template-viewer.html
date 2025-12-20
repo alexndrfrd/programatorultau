@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vizualizare Template - Programatorul Tău</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #f5f5f5; }
+        .header { background: linear-gradient(135deg, #6366F1, #8B5CF6); color: white; padding: 2rem; text-align: center; }
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .header p { opacity: 0.9; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .loading { text-align: center; padding: 4rem; }
+        .error { background: #fee; color: #c33; padding: 2rem; border-radius: 12px; margin: 2rem 0; text-align: center; }
+        .template-info { background: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .template-info h2 { color: #333; margin-bottom: 1rem; }
+        .template-info p { color: #666; margin: 0.5rem 0; }
+        .template-frame { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .template-frame iframe { width: 100%; height: 800px; border: none; }
+        .actions { margin-top: 2rem; text-align: center; }
+        .btn { display: inline-block; padding: 1rem 2rem; background: #6366F1; color: white; text-decoration: none; border-radius: 8px; margin: 0.5rem; font-weight: 600; }
+        .btn:hover { background: #4f46e5; }
+        .btn-secondary { background: #6b7280; }
+        .btn-secondary:hover { background: #4b5563; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌐 Vizualizare Template</h1>
+        <p>Site-ul tău generat</p>
+    </div>
+    <div class="container">
+        <div id="loading" class="loading">
+            <p>Se încarcă template-ul...</p>
+        </div>
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="template-info" class="template-info" style="display: none;"></div>
+        <div id="template-frame" class="template-frame" style="display: none;">
+            <iframe id="template-iframe" src="about:blank"></iframe>
+        </div>
+        <div id="actions" class="actions" style="display: none;">
+            <a href="#" class="btn" id="download-btn">Descarcă Site-ul</a>
+            <a href="/" class="btn btn-secondary">Înapoi la Site</a>
+        </div>
+    </div>
+    <script>
+        // Get template ID and token from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        const pathParts = window.location.pathname.split('/');
+        const templateId = pathParts[pathParts.length - 1];
+        
+        const API_BASE_URL = 'http://localhost:3000/api';
+        
+        async function loadTemplate() {
+            if (!templateId || !token) {
+                showError('ID template sau token lipsă din URL. Te rugăm să folosești link-ul primit pe email.');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/templates/${templateId}?token=${token}`);
+                const result = await response.json();
+                
+                if (!result.success) {
+                    throw new Error(result.message || 'Template-ul nu a fost găsit');
+                }
+                
+                const template = result.data;
+                
+                // Show template info
+                document.getElementById('template-info').style.display = 'block';
+                document.getElementById('template-info').innerHTML = `
+                    <h2>${template.site_name}</h2>
+                    <p><strong>Tip:</strong> ${template.site_type}</p>
+                    <p><strong>Plan:</strong> ${template.plan}</p>
+                    <p><strong>Temă:</strong> ${template.theme}</p>
+                    <p><strong>Creat:</strong> ${new Date(template.created_at).toLocaleDateString('ro-RO')}</p>
+                `;
+                
+                // Load template HTML in iframe
+                const iframe = document.getElementById('template-iframe');
+                iframe.srcdoc = template.html_content;
+                
+                // Show template frame
+                document.getElementById('template-frame').style.display = 'block';
+                
+                // Setup download
+                const downloadBtn = document.getElementById('download-btn');
+                downloadBtn.href = `data:text/html;charset=utf-8,${encodeURIComponent(template.html_content)}`;
+                downloadBtn.download = `${template.site_name.replace(/\s+/g, '-').toLowerCase()}-site.html`;
+                
+                // Show actions
+                document.getElementById('actions').style.display = 'block';
+                
+                // Hide loading
+                document.getElementById('loading').style.display = 'none';
+                
+            } catch (error) {
+                showError('Eroare la încărcarea template-ului: ' + error.message);
+            }
+        }
+        
+        function showError(message) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('error').textContent = message;
+        }
+        
+        // Load template on page load
+        loadTemplate();
+    </script>
+</body>
+</html>
+

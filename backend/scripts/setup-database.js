@@ -47,6 +47,29 @@ async function setupDatabase() {
         await connection.query(createBookingsTable);
         console.log('✅ Table "bookings" created/verified');
 
+        // Create templates table
+        const createTemplatesTable = `
+            CREATE TABLE IF NOT EXISTS templates (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                site_name VARCHAR(255) NOT NULL,
+                site_type VARCHAR(50) DEFAULT 'prezentare',
+                plan VARCHAR(50) DEFAULT 'basic',
+                theme VARCHAR(50) DEFAULT 'modern',
+                html_content LONGTEXT NOT NULL,
+                config_data JSON,
+                client_email VARCHAR(255) NOT NULL,
+                client_name VARCHAR(255),
+                token VARCHAR(64) NOT NULL UNIQUE,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                INDEX idx_token (token),
+                INDEX idx_client_email (client_email),
+                INDEX idx_created_at (created_at)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        `;
+
+        await connection.query(createTemplatesTable);
+        console.log('✅ Table "templates" created/verified');
+
         console.log('\n🎉 Database setup completed successfully!');
         console.log('\n📝 Next steps:');
         console.log('   1. Update .env with your database credentials');

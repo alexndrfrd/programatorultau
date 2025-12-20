@@ -51,6 +51,7 @@
                     <li><a href="#home">Acasă</a></li>
                     <li><a href="#servicii">Servicii</a></li>
                     <li><a href="solutions.html">Soluții</a></li>
+                    <li><a href="#ai">AI Tools</a></li>
                     <li><a href="#proiecte">Proiecte</a></li>
                     <li><a href="#site-la-click">Site la Click</a></li>
                     <li><a href="#consultatie">Consultație Gratuită</a></li>
@@ -74,12 +75,14 @@
                     <span class="gradient-text">soluții digitale</span>
                 </h1>
                 <p class="hero-subtitle">
-                    Facem aplicații mobile, site-uri web, integrări cu eMAG, PayU, Stripe și multe altele.
+                    Facem aplicații mobile, site-uri web, <strong>Site la Click</strong>, integrări cu eMAG, PayU, Stripe, 
+                    <strong>AI Tools</strong> pentru automatizări și procesare documente, și multe altele.
                     <strong>Discutăm cu tine GRATIS</strong> despre proiectul tău - programează o întâlnire online de 40 de minute!
                 </p>
                 <div class="hero-buttons">
                     <a href="#consultatie" class="btn btn-primary pulse-btn">📅 Consultație Gratuită</a>
-                    <a href="#proiecte" class="btn btn-secondary">Vezi Proiectele</a>
+                    <a href="#ai" class="btn btn-secondary">🤖 AI Tools</a>
+                    <a href="#site-la-click" class="btn btn-secondary">🌐 Site la Click</a>
                 </div>
                 <div class="hero-stats">
                     <div class="stat">
@@ -120,8 +123,72 @@
         </div>
     </section>
 
+    <!-- Dashboard Section - What We Offer -->
+    <section class="dashboard-offer" data-feature="dashboardOffer">
+        <div class="container">
+            <div class="dashboard-header">
+                <h2 class="dashboard-title">Ce Oferim</h2>
+                <p class="dashboard-subtitle">Soluții complete pentru afacerea ta digitală</p>
+            </div>
+            <div class="dashboard-grid">
+                <a href="#site-la-click" class="dashboard-card site-card">
+                    <div class="dashboard-card-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                    </div>
+                    <h3>Site la Click</h3>
+                    <p>Site-uri web moderne și responsive, gata în câteva zile. Design profesional, optimizat pentru toate dispozitivele.</p>
+                    <div class="dashboard-card-arrow">→</div>
+                </a>
+
+                <a href="#servicii" class="dashboard-card shop-card">
+                    <div class="dashboard-card-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"/>
+                            <circle cx="20" cy="21" r="1"/>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                        </svg>
+                    </div>
+                    <h3>Magazin Online</h3>
+                    <p>Magazine online complete cu plăți online, gestionare comenzi, stocuri și integrări cu eMAG, PayU, Stripe.</p>
+                    <div class="dashboard-card-arrow">→</div>
+                </a>
+
+                <a href="solutions.html" class="dashboard-card solutions-card">
+                    <div class="dashboard-card-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3>Soluțiile Noastre</h3>
+                    <p>Aplicații mobile, integrări API, automatizări, sisteme de gestionare. Soluții personalizate pentru nevoile tale.</p>
+                    <div class="dashboard-card-arrow">→</div>
+                </a>
+
+                <a href="#ai" class="dashboard-card ai-card">
+                    <div class="dashboard-card-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                            <circle cx="19" cy="5" r="2" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Integrări AI</h3>
+                    <p>AI Tools pentru procesare documente, OCR facturi, automatizări inteligente și integrări MCP avansate.</p>
+                    <div class="dashboard-card-arrow">→</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Services Section -->
-    <section id="servicii" class="services">
+    <section id="servicii" class="services" data-feature="servicesSection">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Serviciile Noastre</h2>
@@ -388,7 +455,7 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="proiecte" class="projects">
+    <section id="proiecte" class="projects" data-feature="projectsSection">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Proiecte Realizate</h2>
@@ -479,67 +546,288 @@
     </section>
 
     <!-- Site la Click Section -->
-    <section id="site-la-click" class="site-la-click">
+    <section id="site-la-click" class="site-la-click" data-feature="siteLaClick">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Site la Click - Soluție Rapidă</h2>
                 <p class="section-subtitle">Ai nevoie de un site rapid? Oferim soluții complete de la 300 RON/lună</p>
             </div>
+            <div class="site-la-click-intro">
+                <p class="intro-text">
+                    Alege tipul de site pe care vrei să-l creezi. Site-urile de prezentare pot fi generate instant, 
+                    iar pentru magazine online și site-uri complexe oferim soluții personalizate.
+                </p>
+            </div>
+            
+            <!-- Site Prezentare -->
+            <div class="site-type-section site-type-white">
+                <div class="site-type-header">
+                    <div class="site-type-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="site-type-title">Site Prezentare</h3>
+                        <p class="site-type-subtitle">Generare Instant</p>
+                    </div>
+                </div>
+                <p class="site-type-description">Creează-ți site-ul de prezentare în câteva minute! Alege un plan, selectează o temă, customizează totul și generează site-ul instant.</p>
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <div class="pricing-header">
-                        <h3>Site Prezentare</h3>
+                            <h3>Basic</h3>
                         <div class="price">
                             <span class="amount">300</span>
                             <span class="currency">RON/lună</span>
                         </div>
                     </div>
                     <ul class="pricing-features">
-                        <li>✓ Site cu 5-10 pagini</li>
+                            <li>✓ Landing page cu 3-5 secțiuni</li>
                         <li>✓ Design modern și responsive</li>
-                        <li>✓ Formular de contact</li>
-                        <li>✓ Integrare Google Maps</li>
-                        <li>✓ Suport tehnic inclus</li>
-                        <li>✓ Actualizări gratuite</li>
+                            <li>✓ Formular de contact simplu</li>
+                            <li>✓ 2 teme disponibile</li>
+                            <li>✓ Customizare culori și texte</li>
+                            <li>✓ Logo generat automat</li>
                     </ul>
-                    <a href="#" class="btn btn-primary choose-plan" data-plan="prezentare" data-price="300">Alege Planul</a>
+                        <a href="#" class="btn btn-primary choose-plan" data-type="prezentare" data-plan="basic" data-price="300">Creează Site</a>
                 </div>
                 <div class="pricing-card featured">
                     <div class="popular-badge">Cel Mai Popular</div>
                     <div class="pricing-header">
-                        <h3>Magazin Online</h3>
+                            <h3>Pro</h3>
                         <div class="price">
                             <span class="amount">500</span>
                             <span class="currency">RON/lună</span>
                         </div>
                     </div>
                     <ul class="pricing-features">
-                        <li>✓ Tot ce e în Site Prezentare</li>
-                        <li>✓ Catalog de produse nelimitat</li>
-                        <li>✓ Plăți online (PayU, Stripe)</li>
-                        <li>✓ Gestionare comenzi</li>
-                        <li>✓ Integrare curierat</li>
+                            <li>✓ Tot ce e în Basic</li>
+                            <li>✓ Landing page cu 5-8 secțiuni</li>
+                            <li>✓ Toate cele 5 teme disponibile</li>
+                            <li>✓ Upload logo personalizat</li>
+                            <li>✓ Upload imagini personalizate</li>
+                            <li>✓ Integrare Google Maps</li>
+                            <li>✓ Formular de contact avansat</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary choose-plan" data-type="prezentare" data-plan="pro" data-price="500">Creează Site</a>
+                    </div>
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Premium</h3>
+                            <div class="price">
+                                <span class="amount">800</span>
+                                <span class="currency">RON/lună</span>
+                            </div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>✓ Tot ce e în Pro</li>
+                            <li>✓ Landing page cu 8-12 secțiuni</li>
+                            <li>✓ Secțiuni speciale (Testimoniale, FAQ)</li>
+                            <li>✓ Integrare social media</li>
+                            <li>✓ Analytics și tracking</li>
+                            <li>✓ Optimizare SEO avansată</li>
+                            <li>✓ Suport prioritar</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary choose-plan" data-type="prezentare" data-plan="premium" data-price="800">Creează Site</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Magazin Online -->
+            <div class="site-type-section site-type-white">
+                <div class="site-type-header">
+                    <div class="site-type-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"/>
+                            <circle cx="20" cy="21" r="1"/>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="site-type-title">Magazin Online</h3>
+                        <p class="site-type-subtitle">Transformă-ți business-ul într-un magazin online de succes</p>
+                    </div>
+                </div>
+                <p class="site-type-description">
+                    Soluții complete pentru vânzări online. De la catalog de produse până la integrare eMAG, 
+                    oferim tot ce ai nevoie pentru a-ți crește vânzările. Prețurile sunt flexibile și pot fi 
+                    personalizate în funcție de volumul tău de business.
+                </p>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Starter</h3>
+                            <div class="price">
+                                <span class="amount">500</span>
+                                <span class="currency">RON/lună</span>
+                            </div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>✓ Până la 50 de produse</li>
+                            <li>✓ Catalog de produse</li>
+                            <li>✓ Coș de cumpărături</li>
+                            <li>✓ Plăți online (PayU)</li>
+                            <li>✓ Gestionare comenzi de bază</li>
+                            <li>✓ Email notificări</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary choose-plan" data-type="magazin" data-plan="starter" data-price="500">Alege Planul</a>
+                    </div>
+                    <div class="pricing-card featured">
+                        <div class="popular-badge">Recomandat</div>
+                        <div class="pricing-header">
+                            <h3>Business</h3>
+                            <div class="price">
+                                <span class="amount">800</span>
+                                <span class="currency">RON/lună</span>
+                            </div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>✓ Până la 500 de produse</li>
+                            <li>✓ Tot ce e în Starter</li>
+                            <li>✓ Plăți multiple (PayU, Stripe)</li>
+                            <li>✓ Gestionare stocuri avansată</li>
+                            <li>✓ Integrare curierat (Sameday, Fan Courier)</li>
                         <li>✓ Rapoarte vânzări</li>
+                            <li>✓ Discount-uri și cupoane</li>
                     </ul>
-                    <a href="#" class="btn btn-primary choose-plan" data-plan="magazin" data-price="500">Alege Planul</a>
+                        <a href="#" class="btn btn-primary choose-plan" data-type="magazin" data-plan="business" data-price="800">Alege Planul</a>
                 </div>
                 <div class="pricing-card">
                     <div class="pricing-header">
-                        <h3>Site Complex</h3>
+                            <h3>Enterprise</h3>
                         <div class="price">
-                            <span class="amount">1000</span>
+                                <span class="amount">1200</span>
                             <span class="currency">RON/lună</span>
                         </div>
                     </div>
                     <ul class="pricing-features">
-                        <li>✓ Tot ce e în Magazin Online</li>
-                        <li>✓ Integrare eMAG</li>
-                        <li>✓ Sistem de rezervări</li>
-                        <li>✓ Chatbot AI</li>
+                            <li>✓ Produse nelimitate</li>
+                            <li>✓ Tot ce e în Business</li>
+                            <li>✓ Integrare eMAG Marketplace</li>
+                            <li>✓ Multi-depozit și sincronizare</li>
+                            <li>✓ CRM integrat</li>
                         <li>✓ Automatizări avansate</li>
-                        <li>✓ Suport prioritar</li>
+                            <li>✓ Suport prioritar 24/7</li>
                     </ul>
-                    <a href="#" class="btn btn-primary choose-plan" data-plan="complex" data-price="1000">Alege Planul</a>
+                        <a href="#" class="btn btn-primary choose-plan" data-type="magazin" data-plan="enterprise" data-price="1200">Alege Planul</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Site Complex -->
+            <div class="site-type-section">
+                <div class="site-type-header site-type-header-white">
+                    <div class="site-type-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="site-type-title">Site Complex</h3>
+                    </div>
+                </div>
+                <div class="site-type-subtitle-box">
+                    <p class="site-type-subtitle">Soluții personalizate pentru proiecte avansate</p>
+                </div>
+                <div class="complex-site-card">
+                    <div class="complex-site-hero">
+                        <h4>Proiecte care depășesc limitele standard</h4>
+                        <p>Pentru site-uri cu funcționalități speciale și cerințe unice, oferim soluții complet personalizate. Fiecare proiect este unic și merită o abordare dedicată.</p>
+                    </div>
+                    <div class="complex-site-content">
+                        <div class="complex-features-grid">
+                            <div class="complex-feature">
+                                <div class="complex-feature-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                                        <line x1="12" y1="22.08" x2="12" y2="12"/>
+                                    </svg>
+                                </div>
+                                <h5>Integrări API</h5>
+                                <p>Conectăm site-ul tău cu orice serviciu extern de care ai nevoie</p>
+                            </div>
+                            <div class="complex-feature">
+                                <div class="complex-feature-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                        <line x1="16" y1="2" x2="16" y2="6"/>
+                                        <line x1="8" y1="2" x2="8" y2="6"/>
+                                        <line x1="3" y1="10" x2="21" y2="10"/>
+                                    </svg>
+                                </div>
+                                <h5>Sisteme Rezervări</h5>
+                                <p>Platforme complete pentru booking, calendar și gestionare programări</p>
+                            </div>
+                            <div class="complex-feature">
+                                <div class="complex-feature-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                                    </svg>
+                                </div>
+                                <h5>Chatbot AI</h5>
+                                <p>Asistenți virtuali inteligenți pentru suport clienți 24/7</p>
+                            </div>
+                            <div class="complex-feature">
+                                <div class="complex-feature-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                                    </svg>
+                                </div>
+                                <h5>Automatizări</h5>
+                                <p>Workflow-uri automate care economisesc timp și reduc erorile</p>
+                            </div>
+                            <div class="complex-feature">
+                                <div class="complex-feature-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                        <path d="M2 17l10 5 10-5"/>
+                                        <path d="M2 12l10 5 10-5"/>
+                                    </svg>
+                                </div>
+                                <h5>Funcționalități Custom</h5>
+                                <p>Dezvoltăm exact ce ai nevoie, fără compromisuri</p>
+                            </div>
+                            <div class="complex-feature">
+                                <div class="complex-feature-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                        <polyline points="7.5 4.21 12 6.81 16.5 4.21"/>
+                                        <polyline points="7.5 19.79 7.5 14.6 3 12"/>
+                                        <polyline points="21 12 16.5 14.6 16.5 19.79"/>
+                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                                        <line x1="12" y1="22.08" x2="12" y2="12"/>
+                                    </svg>
+                                </div>
+                                <h5>Soluții Enterprise</h5>
+                                <p>Arhitectură scalabilă pentru business-uri mari</p>
+                            </div>
+                        </div>
+                        <div class="complex-cta-section">
+                            <div class="complex-note">
+                                <div class="complex-note-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="12" y1="16" x2="12" y2="12"/>
+                                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h5>Consultație Prealabilă Necesară</h5>
+                                    <p>Pentru a înțelege exact ce ai nevoie și a-ți oferi cea mai bună soluție, programează o consultație gratuită de 40 de minute. Prețul se stabilește ulterior, în funcție de cerințele specifice ale proiectului tău.</p>
+                                </div>
+                            </div>
+                            <div class="complex-actions">
+                                <a href="#consultatie" class="btn btn-primary">📅 Programează Consultație Gratuită</a>
+                                <button class="btn btn-secondary" id="complex-site-form-btn">📝 Trimite Detalii Proiect</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="pricing-note">
@@ -549,7 +837,7 @@
     </section>
 
     <!-- Consultație Gratuită Section -->
-    <section id="consultatie" class="consultatie">
+    <section id="consultatie" class="consultatie" data-feature="consultationBooking">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Consultație Gratuită - 40 de Minute</h2>
@@ -606,92 +894,234 @@
     </section>
 
     <!-- AI Solutions Section -->
-    <section id="ai" class="ai-solutions">
+    <section id="ai" class="ai-solutions" data-feature="aiSection">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Automatizări cu AI - Ușurează-ți Munca</h2>
-                <p class="section-subtitle">Folosim inteligență artificială pentru a face lucrurile automat, fără să te mai ocupi tu</p>
-            </div>
-            <div class="ai-content">
-                <div class="ai-intro">
-                    <h3>Ce înseamnă AI pentru tine?</h3>
-                    <p>
-                        <strong>AI = Inteligenta Artificială</strong> - e ca un angajat virtual care lucrează non-stop pentru tine.
-                        De exemplu: dacă ai un magazin online, AI-ul poate răspunde la întrebările clienților automat, 
-                        fără să stai tu la telefon. Sau poate procesa facturi și comenzi automat, fără să le introduci tu manual.
-                        <strong>Scopul e să ușureze munca ta și să facă totul mai rapid.</strong>
+            <!-- Hero Banner -->
+            <div class="ai-platform-hero">
+                <div class="ai-platform-header">
+                    <span class="ai-platform-badge">Soluții AI Complete</span>
+                    <h2 class="ai-platform-title">
+                        Gestionează-ți<br>
+                        <span class="gradient-text">Afacerea cu AI</span>
+                    </h2>
+                    <p class="ai-platform-subtitle">
+                        AI Tools, Automatizări, Integrări și Procesare Documente - toate într-un singur loc. 
+                        Simplifică-ți operațiunile zilnice cu inteligență artificială.
                     </p>
+                    <div class="ai-platform-cta">
+                        <a href="#consultatie" class="btn btn-primary">Începe Gratuit</a>
+                        <a href="#ai-modules" class="btn btn-secondary">Vezi Modulele</a>
                 </div>
-                <div class="ai-features">
-                    <div class="ai-feature">
-                        <div class="ai-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                                <path d="M2 17l10 5 10-5"/>
-                                <path d="M2 12l10 5 10-5"/>
+                </div>
+                <div class="ai-platform-stats">
+                    <div class="ai-stat">
+                        <div class="ai-stat-number">8+</div>
+                        <div class="ai-stat-label">Module AI</div>
+                    </div>
+                    <div class="ai-stat">
+                        <div class="ai-stat-number">50+</div>
+                        <div class="ai-stat-label">Proiecte AI</div>
+                    </div>
+                    <div class="ai-stat">
+                        <div class="ai-stat-badge">AI</div>
+                        <div class="ai-stat-label">Powered</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modules Header -->
+            <div class="ai-modules-header" id="ai-modules">
+                <h3 class="ai-modules-title">8+ Module AI Integrate</h3>
+                <p class="ai-modules-subtitle">O suită completă de instrumente AI pentru gestionarea afacerii tale. Tot ce ai nevoie, într-un singur loc.</p>
+            </div>
+
+            <!-- AI Modules Grid -->
+            <div class="ai-tools-grid">
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10 9 9 9 8 9"/>
                             </svg>
                         </div>
-                        <h4>Chatbot pe Site</h4>
-                        <p>Un robot care răspunde la întrebările clienților pe site, 24/7. Nu mai trebuie să stai tu la telefon - chatbot-ul răspunde automat.</p>
+                    <h4>Analiza Documente</h4>
+                    <p>Încarcă documente PDF și extrage informații relevante automat cu AI. Procesează sute de documente în câteva minute, nu ore.</p>
+                    <ul class="ai-tool-features">
+                        <li>Procesare PDF, Word, Excel</li>
+                        <li>Extragere automată date</li>
+                        <li>Analiză inteligentă</li>
+                        <li>Sumarizare automată</li>
+                    </ul>
                     </div>
-                    <div class="ai-feature">
-                        <div class="ai-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+                <div class="ai-tool-card featured">
+                    <div class="ai-tool-badge">Popular</div>
+                    <div class="ai-tool-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="9" y1="3" x2="9" y2="21"/>
+                            <line x1="3" y1="9" x2="21" y2="9"/>
+                            <path d="M9 9h12v12H9z"/>
+                        </svg>
+                    </div>
+                    <h4>OCR Facturi</h4>
+                    <p>Scanează facturi și extrage automat datele pentru înregistrare rapidă. Nu mai introduci manual - AI-ul face totul pentru tine.</p>
+                    <ul class="ai-tool-features">
+                        <li>OCR pentru facturi fotografiate</li>
+                        <li>Extragere automată CUI, total, dată</li>
+                        <li>Validare și verificare ANAF</li>
+                        <li>Export automat în sistem</li>
+                    </ul>
+                </div>
+
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            <path d="M13 8H7"/>
+                            <path d="M17 12H7"/>
+                        </svg>
+                    </div>
+                    <h4>Asistent Scriere</h4>
+                    <p>Generează emailuri, contracte și documente profesionale cu AI. Economisește timp și asigură un conținut profesional.</p>
+                    <ul class="ai-tool-features">
+                        <li>Generare emailuri automate</li>
+                        <li>Template-uri contracte</li>
+                        <li>Conținut personalizat</li>
+                        <li>Optimizare SEO</li>
+                    </ul>
+                </div>
+
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
                                 <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
                                 <line x1="12" y1="22.08" x2="12" y2="12"/>
                             </svg>
                         </div>
-                        <h4>Automatizare Procese</h4>
-                        <p>Facem ca lucrurile să se întâmple singure. De exemplu: când vine o comandă, se trimite automat email clientului, se actualizează stocul, se trimite la curier - totul automat.</p>
+                    <h4>Extragere Date</h4>
+                    <p>Extrage automat informații din documente complexe și tabele. Transformă documente în date structurate instant.</p>
+                    <ul class="ai-tool-features">
+                        <li>Extragere din tabele</li>
+                        <li>Procesare documente complexe</li>
+                        <li>Structurare automată date</li>
+                        <li>Export CSV/JSON</li>
+                    </ul>
                     </div>
-                    <div class="ai-feature">
-                        <div class="ai-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
                             </svg>
                         </div>
-                        <h4>Analiză și Rapoarte</h4>
-                        <p>AI-ul analizează vânzările tale și îți spune ce produse se vând bine, când să mai comanzi stoc, ce clienți sunt fideli. Te ajută să iei decizii mai bune.</p>
+                    <h4>Analiză Inteligentă</h4>
+                    <p>Obține insights și sumarizări din volume mari de date și documente. Descoperă pattern-uri și tendințe automat.</p>
+                    <ul class="ai-tool-features">
+                        <li>Analiză volume mari date</li>
+                        <li>Sumarizări automate</li>
+                        <li>Insights și recomandări</li>
+                        <li>Rapoarte vizuale</li>
+                    </ul>
                     </div>
-                    <div class="ai-feature">
-                        <div class="ai-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 11l3 3L22 4"/>
-                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
                             </svg>
                         </div>
-                        <h4>Procesare Facturi</h4>
-                        <p>Primești o factură? O trimiți la sistem și AI-ul o citește automat, extrage datele și le introduce în sistem. Nu mai scrii tu manual.</p>
+                    <h4>Automatizare Rapidă</h4>
+                    <p>Procesează sute de documente în câteva minute, nu ore. Workflow-uri automate pentru procese repetitive.</p>
+                    <ul class="ai-tool-features">
+                        <li>Procesare în batch</li>
+                        <li>Workflow-uri automate</li>
+                        <li>Integrări MCP</li>
+                        <li>Trigger-uri personalizate</li>
+                    </ul>
                     </div>
-                    <div class="ai-feature">
-                        <div class="ai-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                <circle cx="9" cy="7" r="4"/>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
                             </svg>
                         </div>
-                        <h4>Recomandări Clienți</h4>
-                        <p>AI-ul vede ce cumpără fiecare client și le recomandă automat produse similare. Crește vânzările fără să faci tu nimic.</p>
+                    <h4>Integrări API</h4>
+                    <p>Conectează sistemul tău cu servicii externe: eMAG, PayU, Stripe, Sameday și multe altele. Totul automat.</p>
+                    <ul class="ai-tool-features">
+                        <li>Integrări eMAG Marketplace</li>
+                        <li>Plăți online PayU/Stripe</li>
+                        <li>Curieri Sameday/Fan Courier</li>
+                        <li>API-uri personalizate</li>
+                    </ul>
                     </div>
-                    <div class="ai-feature">
-                        <div class="ai-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+
+                <div class="ai-tool-card">
+                    <div class="ai-tool-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="9" y1="3" x2="9" y2="21"/>
+                            <line x1="3" y1="9" x2="21" y2="9"/>
                             </svg>
                         </div>
-                        <h4>Integrări AI Avansate</h4>
-                        <p>Conectăm sistemul tău cu cele mai bune tehnologii AI de pe piață. Totul funcționează sigur și rapid, fără să te ocupi tu de nimic.</p>
+                    <h4>Rapoarte & Analytics</h4>
+                    <p>Dashboard-uri personalizate, rapoarte detaliate, export date și vizualizări grafice pentru business-ul tău.</p>
+                    <ul class="ai-tool-features">
+                        <li>Dashboard-uri personalizate</li>
+                        <li>Rapoarte detaliate</li>
+                        <li>Export PDF/Excel</li>
+                        <li>Vizualizări grafice</li>
+                    </ul>
                     </div>
                 </div>
+
+            <!-- MCP Section -->
+            <div class="mcp-section">
+                <div class="mcp-header">
+                    <h3>MCP (Model Context Protocol) - Integrări Avansate</h3>
+                    <p>Conectează aplicația ta cu servicii externe și extinde funcționalitățile prin Model Context Protocol</p>
+                </div>
+                <div class="mcp-features">
+                    <div class="mcp-feature">
+                        <div class="mcp-icon">🔌</div>
+                        <h4>Integrări Externe</h4>
+                        <p>Conectează-te cu servicii externe prin MCP: API-uri, baze de date, servicii cloud și multe altele.</p>
+                    </div>
+                    <div class="mcp-feature">
+                        <div class="mcp-icon">⚡</div>
+                        <h4>Extensibilitate</h4>
+                        <p>Extinde funcționalitățile aplicației tale cu tool-uri și servicii externe, fără să modifici codul de bază.</p>
+                    </div>
+                    <div class="mcp-feature">
+                        <div class="mcp-icon">🛡️</div>
+                        <h4>Securitate</h4>
+                        <p>Comunicare sigură și autentificată cu servicii externe prin protocol standardizat MCP.</p>
+                    </div>
+                    <div class="mcp-feature">
+                        <div class="mcp-icon">🔄</div>
+                        <h4>Sincronizare</h4>
+                        <p>Sincronizează date între aplicația ta și servicii externe în timp real, automat și sigur.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ai-cta">
+                <h3>Gata să automatizezi afacerea ta cu AI?</h3>
+                <p>Economisește ore de muncă manuală în fiecare zi</p>
+                <a href="#consultatie" class="btn btn-primary">Începe Gratuit</a>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="contact">
+    <section id="contact" class="contact" data-feature="contactForm">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Hai să discutăm proiectul tău</h2>
@@ -723,19 +1153,20 @@
                         </div>
                     </div>
                 </div>
-                <form class="contact-form">
+                <form class="contact-form" id="contact-form">
                     <div class="form-group">
-                        <input type="text" placeholder="Numele tău" required>
+                        <input type="text" name="name" placeholder="Numele tău" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" placeholder="Email" required>
+                        <input type="email" name="email" placeholder="Email" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" placeholder="Subiect">
+                        <input type="text" name="subject" placeholder="Subiect">
                     </div>
                     <div class="form-group">
-                        <textarea rows="5" placeholder="Mesajul tău" required></textarea>
+                        <textarea name="message" rows="5" placeholder="Mesajul tău" required></textarea>
                     </div>
+                    <div id="contact-form-message" class="form-message" style="display: none;"></div>
                     <button type="submit" class="btn btn-primary">Trimite Mesaj</button>
                 </form>
             </div>
@@ -743,7 +1174,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" data-feature="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
@@ -818,15 +1249,19 @@
                 </div>
                 <div class="progress-step" data-step="2">
                     <div class="step-number">2</div>
-                    <div class="step-label">Culori</div>
+                    <div class="step-label">Temă</div>
                 </div>
                 <div class="progress-step" data-step="3">
                     <div class="step-number">3</div>
-                    <div class="step-label">Layout</div>
+                    <div class="step-label">Conținut</div>
                 </div>
                 <div class="progress-step" data-step="4">
                     <div class="step-number">4</div>
-                    <div class="step-label">Detalii</div>
+                    <div class="step-label">Design</div>
+                </div>
+                <div class="progress-step" data-step="5">
+                    <div class="step-number">5</div>
+                    <div class="step-label">Preview</div>
                 </div>
             </div>
 
@@ -838,76 +1273,98 @@
                 </div>
             </div>
 
-            <!-- Step 2: Colors -->
+            <!-- Step 2: Theme Selection -->
             <div class="wizard-step" data-step="2">
-                <h2>Alege Culorile</h2>
-                <div class="color-picker-section">
-                    <div class="color-group">
-                        <label>Culoare Principală (Header, Butoane)</label>
-                        <div class="color-picker-wrapper">
-                            <input type="color" id="primary-color" value="#6366F1" class="color-picker">
-                            <input type="text" id="primary-color-hex" value="#6366F1" class="color-hex">
+                <h2>Alege Tema</h2>
+                <p class="step-description">Selectează una dintre cele 5 teme disponibile pentru site-ul tău</p>
+                <div class="theme-grid" id="theme-grid">
+                    <div class="theme-card" data-theme="modern">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <div class="theme-preview-content">
+                                <div class="preview-header-bar"></div>
+                                <div class="preview-hero"></div>
+                                <div class="preview-section"></div>
                         </div>
                     </div>
-                    <div class="color-group">
-                        <label>Culoare Secundară (Accenturi)</label>
-                        <div class="color-picker-wrapper">
-                            <input type="color" id="secondary-color" value="#8B5CF6" class="color-picker">
-                            <input type="text" id="secondary-color-hex" value="#8B5CF6" class="color-hex">
+                        <h3>Modern</h3>
+                        <p>Design modern cu gradient-uri și animații</p>
                         </div>
+                    <div class="theme-card" data-theme="minimal">
+                        <div class="theme-preview" style="background: #ffffff; border: 2px solid #e5e7eb;">
+                            <div class="theme-preview-content">
+                                <div class="preview-header-bar" style="background: #f9fafb;"></div>
+                                <div class="preview-hero" style="background: #ffffff;"></div>
+                                <div class="preview-section" style="background: #f9fafb;"></div>
                     </div>
-                    <div class="color-preview">
-                        <div class="preview-box" id="color-preview">
-                            <div class="preview-header">Header</div>
-                            <div class="preview-content">
-                                <button class="preview-btn">Buton</button>
-                                <div class="preview-accent">Accent</div>
                             </div>
+                        <h3>Minimal</h3>
+                        <p>Design minimalist și elegant</p>
                         </div>
+                    <div class="theme-card" data-theme="bold">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <div class="theme-preview-content">
+                                <div class="preview-header-bar"></div>
+                                <div class="preview-hero"></div>
+                                <div class="preview-section"></div>
                     </div>
+                </div>
+                        <h3>Bold</h3>
+                        <p>Culori vibrante și design îndrăzneț</p>
+            </div>
+                    <div class="theme-card" data-theme="corporate">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <div class="theme-preview-content">
+                                <div class="preview-header-bar"></div>
+                                <div class="preview-hero"></div>
+                                <div class="preview-section"></div>
+                    </div>
+                    </div>
+                        <h3>Corporate</h3>
+                        <p>Design profesional pentru business</p>
+                    </div>
+                    <div class="theme-card" data-theme="creative">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <div class="theme-preview-content">
+                                <div class="preview-header-bar"></div>
+                                <div class="preview-hero"></div>
+                                <div class="preview-section"></div>
+                    </div>
+                        </div>
+                        <h3>Creative</h3>
+                        <p>Design creativ și unic</p>
+                    </div>
+                </div>
+                <div class="theme-note" id="theme-note">
+                    <p>💡 Planul <strong>Basic</strong> include doar temele Modern și Minimal. Upgrade la Pro pentru toate temele!</p>
                 </div>
             </div>
 
-            <!-- Step 3: Layout -->
+            <!-- Step 3: Content -->
             <div class="wizard-step" data-step="3">
-                <h2>Configurează Layout-ul</h2>
-                <div class="layout-options">
-                    <div class="layout-option">
-                        <label>
-                            <input type="radio" name="header-position" value="top" checked>
-                            <span>Header sus (fixat)</span>
-                        </label>
-                    </div>
-                    <div class="layout-option">
-                        <label>
-                            <input type="radio" name="header-position" value="sticky">
-                            <span>Header sus (sticky la scroll)</span>
-                        </label>
-                    </div>
-                    <div class="layout-option">
-                        <label>
-                            <input type="checkbox" name="footer-visible" checked>
-                            <span>Footer vizibil</span>
-                        </label>
-                    </div>
-                    <div class="layout-option">
-                        <label>
-                            <input type="checkbox" name="sidebar-visible">
-                            <span>Sidebar (doar pentru plan Complex)</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Step 4: Details -->
-            <div class="wizard-step" data-step="4">
-                <h2>Detalii Site</h2>
+                <h2>Personalizează Conținutul</h2>
+                <div class="content-editor">
                 <div class="form-group">
-                    <label>Nume Site / Brand</label>
+                        <label>Nume Site / Brand *</label>
                     <input type="text" id="site-name" placeholder="Ex: Magazinul Meu" required>
                 </div>
                 <div class="form-group">
-                    <label>Email pentru contact</label>
+                        <label>Titlu Principal (Hero) *</label>
+                        <input type="text" id="hero-title" placeholder="Ex: Bun venit la Magazinul Meu" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Subtitlu Principal</label>
+                        <textarea id="hero-subtitle" rows="2" placeholder="Descriere scurtă despre site-ul tău..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Text Buton Principal</label>
+                        <input type="text" id="cta-button-text" placeholder="Ex: Contactează-ne" value="Contactează-ne">
+                    </div>
+                    <div class="form-group">
+                        <label>Despre Noi (Secțiune)</label>
+                        <textarea id="about-text" rows="4" placeholder="Descrie ce face business-ul tău..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Email pentru contact *</label>
                     <input type="email" id="site-email" placeholder="contact@example.com" required>
                 </div>
                 <div class="form-group">
@@ -915,8 +1372,72 @@
                     <input type="tel" id="site-phone" placeholder="+40 XXX XXX XXX">
                 </div>
                 <div class="form-group">
-                    <label>Descriere scurtă (pentru SEO)</label>
-                    <textarea id="site-description" rows="3" placeholder="Descrie în câteva cuvinte ce face site-ul tău..."></textarea>
+                        <label>Adresă</label>
+                        <input type="text" id="site-address" placeholder="Strada, Număr, Oraș">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Design -->
+            <div class="wizard-step" data-step="4">
+                <h2>Personalizează Design-ul</h2>
+                <div class="design-editor">
+                    <div class="color-section">
+                        <h3>Culori</h3>
+                        <div class="color-group">
+                            <label>Culoare Principală</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="primary-color" value="#6366F1" class="color-picker">
+                                <input type="text" id="primary-color-hex" value="#6366F1" class="color-hex">
+                            </div>
+                        </div>
+                        <div class="color-group">
+                            <label>Culoare Secundară</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="secondary-color" value="#8B5CF6" class="color-picker">
+                                <input type="text" id="secondary-color-hex" value="#8B5CF6" class="color-hex">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="logo-section">
+                        <h3>Logo</h3>
+                        <div class="logo-options">
+                            <label class="logo-option">
+                                <input type="radio" name="logo-type" value="auto" checked>
+                                <span>Logo generat automat (text)</span>
+                            </label>
+                            <label class="logo-option" id="logo-upload-option">
+                                <input type="radio" name="logo-type" value="upload">
+                                <span>Upload logo personalizat</span>
+                            </label>
+                        </div>
+                        <div class="logo-upload" id="logo-upload" style="display: none;">
+                            <input type="file" id="logo-file" accept="image/*">
+                            <div class="logo-preview" id="logo-preview"></div>
+                        </div>
+                    </div>
+                    <div class="images-section" id="images-section" style="display: none;">
+                        <h3>Imagini</h3>
+                        <div class="image-upload-group">
+                            <label>Imagine Hero (opțional)</label>
+                            <input type="file" id="hero-image-file" accept="image/*">
+                            <div class="image-preview" id="hero-image-preview"></div>
+                        </div>
+                        <div class="image-upload-group">
+                            <label>Imagine Despre Noi (opțional)</label>
+                            <input type="file" id="about-image-file" accept="image/*">
+                            <div class="image-preview" id="about-image-preview"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Preview -->
+            <div class="wizard-step" data-step="5">
+                <h2>Preview Site</h2>
+                <p class="step-description">Verifică cum arată site-ul tău înainte de generare</p>
+                <div class="site-preview" id="site-preview">
+                    <!-- Preview will be generated here -->
                 </div>
             </div>
 
@@ -928,9 +1449,58 @@
         </div>
     </div>
 
+    <!-- Complex Site Form Modal -->
+    <div id="complex-site-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h2>Detalii Proiect Site Complex</h2>
+            <p class="modal-description">
+                Completează formularul de mai jos cu detalii despre proiectul tău. 
+                Vă vom contacta pentru o consultație și o ofertă personalizată.
+            </p>
+            <form id="complex-site-form" class="complex-site-form">
+                <div class="form-group">
+                    <label>Nume / Companie *</label>
+                    <input type="text" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Telefon</label>
+                    <input type="tel" name="phone">
+                </div>
+                <div class="form-group">
+                    <label>Descrie proiectul tău *</label>
+                    <textarea name="project-description" rows="5" required placeholder="Ex: Am nevoie de un sistem de rezervări pentru restaurant cu integrare plăți și notificări SMS..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Funcționalități principale</label>
+                    <textarea name="features" rows="4" placeholder="Listează funcționalitățile principale de care ai nevoie..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Buget estimat (opțional)</label>
+                    <input type="text" name="budget" placeholder="Ex: 5000-10000 RON">
+                </div>
+                <div class="form-group">
+                    <label>Termen limită (opțional)</label>
+                    <input type="text" name="deadline" placeholder="Ex: 2 luni">
+                </div>
+                <div id="complex-form-message" class="form-message" style="display: none;"></div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeComplexModal()">Anulează</button>
+                    <button type="submit" class="btn btn-primary">Trimite Detalii</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Backend API Integration -->
     <!-- Configurarea se face în script.js - variabila API_BASE_URL -->
 
+    <script src="feature-flags.js"></script>
+    <script src="site-templates.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

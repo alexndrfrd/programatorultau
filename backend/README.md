@@ -37,7 +37,13 @@ Această comandă va:
 - Crea database-ul `programatorultau` (dacă nu există)
 - Crea tabelul `bookings` cu structura corectă
 
-### 4. Pornește serverul
+### 4. Configurează Email (Opțional)
+
+Pentru notificări email când se face o rezervare:
+- **[EMAIL_SETUP_SIMPLE.md](./EMAIL_SETUP_SIMPLE.md)** - Setup simplu cu Outlook/SendGrid (recomandat)
+- **[EMAIL_SETUP.md](./EMAIL_SETUP.md)** - Setup Gmail (dacă App Passwords e disponibil)
+
+### 5. Pornește serverul
 
 ```bash
 # Development (cu auto-reload)

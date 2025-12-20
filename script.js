@@ -1,3 +1,74 @@
+// Feature Flags System
+function initializeFeatureFlags() {
+    // Check if FEATURE_FLAGS is defined
+    if (typeof FEATURE_FLAGS === 'undefined') {
+        console.warn('Feature flags not loaded. All sections will be visible.');
+        return;
+    }
+
+    // Hide/show sections based on feature flags
+    document.querySelectorAll('[data-feature]').forEach(section => {
+        const featureName = section.getAttribute('data-feature');
+        const isEnabled = FEATURE_FLAGS[featureName];
+        
+        if (!isEnabled) {
+            section.style.display = 'none';
+            section.setAttribute('data-feature-disabled', 'true');
+        } else {
+            section.style.display = '';
+            section.removeAttribute('data-feature-disabled');
+        }
+    });
+
+    // Hide/show navigation links based on feature flags
+    const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === '#ai' && !FEATURE_FLAGS.aiSection) {
+            link.closest('li')?.remove();
+        } else if (href === '#site-la-click' && !FEATURE_FLAGS.siteLaClick) {
+            link.closest('li')?.remove();
+        } else if (href === '#consultatie' && !FEATURE_FLAGS.consultationBooking) {
+            link.closest('li')?.remove();
+        } else if (href === '#contact' && !FEATURE_FLAGS.contactForm) {
+            link.closest('li')?.remove();
+        }
+    });
+
+    // Hide/show hero buttons based on feature flags
+    const heroButtons = document.querySelectorAll('.hero-buttons a');
+    heroButtons.forEach(button => {
+        const href = button.getAttribute('href');
+        if (href === '#ai' && !FEATURE_FLAGS.aiSection) {
+            button.style.display = 'none';
+        } else if (href === '#site-la-click' && !FEATURE_FLAGS.siteLaClick) {
+            button.style.display = 'none';
+        } else if (href === '#consultatie' && !FEATURE_FLAGS.consultationBooking) {
+            button.style.display = 'none';
+        }
+    });
+
+    // Hide/show dashboard cards based on feature flags
+    const dashboardCards = document.querySelectorAll('.dashboard-card');
+    dashboardCards.forEach(card => {
+        const href = card.getAttribute('href');
+        if (href === '#ai' && !FEATURE_FLAGS.aiSection) {
+            card.style.display = 'none';
+        } else if (href === '#site-la-click' && !FEATURE_FLAGS.siteLaClick) {
+            card.style.display = 'none';
+        }
+    });
+
+    console.log('✅ Feature flags initialized', FEATURE_FLAGS);
+}
+
+// Initialize feature flags on page load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeFeatureFlags);
+} else {
+    initializeFeatureFlags();
+}
+
 // Mobile Menu Toggle
 const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
 const navMenu = document.querySelector('.nav-menu');
@@ -38,13 +109,62 @@ window.addEventListener('scroll', () => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const href = this.getAttribute('href');
+        
+        // Special handling for ai-modules link
+        if (href === '#ai-modules') {
+            const target = document.querySelector('#ai-modules');
+            if (target) {
+                // Wait a bit for any animations to complete
+                setTimeout(() => {
+                    const navbar = document.querySelector('.navbar');
+                    const navbarHeight = navbar ? navbar.offsetHeight : 80;
+                    
+                    // Use getBoundingClientRect for accurate position
+                    const rect = target.getBoundingClientRect();
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const targetTop = rect.top + scrollTop - navbarHeight - 30;
+                    
+                    window.scrollTo({
+                        top: Math.max(0, targetTop),
+                        behavior: 'smooth'
+                    });
+                }, 100);
+                
+                // Close mobile menu if open
+                const navMenu = document.querySelector('.nav-menu');
+                const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+                if (navMenu && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    if (mobileMenuToggle) {
+                        mobileMenuToggle.classList.remove('active');
+                    }
+                }
+            }
+            return;
+        }
+        
+        // Regular anchor links
+        const target = document.querySelector(href);
         if (target) {
-            const offsetTop = target.offsetTop - 80;
+            // Get navbar height for offset
+            const navbar = document.querySelector('.navbar');
+            const navbarHeight = navbar ? navbar.offsetHeight : 80;
+            const offsetTop = target.offsetTop - navbarHeight - 20;
             window.scrollTo({
-                top: offsetTop,
+                top: Math.max(0, offsetTop),
                 behavior: 'smooth'
             });
+            
+            // Close mobile menu if open
+            const navMenu = document.querySelector('.nav-menu');
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            if (navMenu && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                if (mobileMenuToggle) {
+                    mobileMenuToggle.classList.remove('active');
+                }
+            }
         }
     });
 });
@@ -76,19 +196,62 @@ animateElements.forEach(el => {
 // Form submission handler
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    const API_BASE_URL = 'http://localhost:3000/api';
+    const messageDiv = document.getElementById('contact-form-message');
+    const submitButton = contactForm.querySelector('button[type="submit"]');
+
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+        // Disable submit button
+        submitButton.disabled = true;
+        submitButton.textContent = 'Se trimite...';
+        messageDiv.style.display = 'none';
         
         // Get form data
         const formData = new FormData(contactForm);
-        const data = Object.fromEntries(formData);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            subject: formData.get('subject') || '',
+            message: formData.get('message')
+        };
         
-        // Here you would typically send the data to a server
-        // For now, we'll just show an alert
-        alert('Mulțumim pentru mesaj! Vă vom contacta în curând.');
-        
-        // Reset form
-        contactForm.reset();
+        try {
+            const response = await fetch(`${API_BASE_URL}/contact`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok && result.success) {
+                // Success message
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'form-message success';
+                messageDiv.textContent = result.message || 'Mulțumim pentru mesaj! Vă vom contacta în curând.';
+                
+                // Reset form
+                contactForm.reset();
+            } else {
+                // Error message
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'form-message error';
+                messageDiv.textContent = result.message || 'Eroare la trimiterea mesajului. Te rugăm să încerci din nou.';
+            }
+        } catch (error) {
+            console.error('Error submitting contact form:', error);
+            messageDiv.style.display = 'block';
+            messageDiv.className = 'form-message error';
+            messageDiv.textContent = 'Eroare de conexiune. Te rugăm să încerci din nou sau să ne contactezi direct la contact@programatorultau.com';
+        } finally {
+            // Re-enable submit button
+            submitButton.disabled = false;
+            submitButton.textContent = 'Trimite Mesaj';
+        }
     });
 }
 
@@ -470,27 +633,154 @@ let selectedPlan = null;
 let siteConfig = {};
 
 const planNames = {
-    'prezentare': 'Site Prezentare',
-    'magazin': 'Magazin Online',
-    'complex': 'Site Complex'
+    'basic': 'Basic',
+    'pro': 'Pro',
+    'premium': 'Premium'
 };
 
 const planPrices = {
-    'prezentare': 300,
-    'magazin': 500,
-    'complex': 1000
+    'basic': 300,
+    'pro': 500,
+    'premium': 800
+};
+
+const planFeatures = {
+    'basic': {
+        themes: ['modern', 'minimal'],
+        logoUpload: false,
+        imageUpload: false,
+        sections: 5
+    },
+    'pro': {
+        themes: ['modern', 'minimal', 'bold', 'corporate', 'creative'],
+        logoUpload: true,
+        imageUpload: true,
+        sections: 8
+    },
+    'premium': {
+        themes: ['modern', 'minimal', 'bold', 'corporate', 'creative'],
+        logoUpload: true,
+        imageUpload: true,
+        sections: 12
+    }
 };
 
 // Open wizard modal
 document.querySelectorAll('.choose-plan').forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.preventDefault();
-        selectedPlan = btn.dataset.plan;
-        siteConfig.plan = selectedPlan;
-        siteConfig.price = btn.dataset.price;
-        openWizard();
+        const siteType = btn.dataset.type || 'prezentare';
+        
+        // Handle different site types
+        if (siteType === 'prezentare') {
+            selectedPlan = btn.dataset.plan;
+            siteConfig.siteType = 'prezentare';
+            siteConfig.plan = selectedPlan;
+            siteConfig.price = btn.dataset.price;
+            openWizard();
+        } else if (siteType === 'magazin') {
+            // For magazin online, show subscription info
+            const plan = btn.dataset.plan;
+            const price = btn.dataset.price;
+            alert(`Plan ${plan} - ${price} RON/lună\n\n` +
+                  `Pentru magazine online, prețurile sunt customizabile din database.\n` +
+                  `Te rugăm să programezi o consultație pentru a discuta despre proiectul tău.`);
+            // Scroll to consultation section
+            document.querySelector('#consultatie')?.scrollIntoView({ behavior: 'smooth' });
+        }
     });
 });
+
+// Complex site form button
+const complexSiteFormBtn = document.getElementById('complex-site-form-btn');
+if (complexSiteFormBtn) {
+    complexSiteFormBtn.addEventListener('click', () => {
+        const modal = document.getElementById('complex-site-modal');
+        if (modal) {
+            modal.classList.add('active');
+        }
+    });
+}
+
+// Complex site form submission
+const complexSiteForm = document.getElementById('complex-site-form');
+if (complexSiteForm) {
+    complexSiteForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(complexSiteForm);
+        const data = Object.fromEntries(formData);
+        const messageDiv = document.getElementById('complex-form-message');
+        
+        try {
+            const response = await fetch(`${API_BASE_URL}/contact`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: data.name,
+                    email: data.email,
+                    phone: data.phone || '',
+                    subject: 'Cerere Site Complex',
+                    message: `Cerere pentru Site Complex\n\n` +
+                            `Descriere proiect:\n${data['project-description']}\n\n` +
+                            `Funcționalități:\n${data.features || 'N/A'}\n\n` +
+                            `Buget estimat: ${data.budget || 'N/A'}\n` +
+                            `Termen limită: ${data.deadline || 'N/A'}`
+                })
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'form-message success';
+                messageDiv.textContent = 'Mulțumim! Vă vom contacta în curând pentru o consultație și o ofertă personalizată.';
+                complexSiteForm.reset();
+                setTimeout(() => {
+                    closeComplexModal();
+                }, 3000);
+            } else {
+                throw new Error(result.message || 'Error submitting form');
+            }
+        } catch (error) {
+            messageDiv.style.display = 'block';
+            messageDiv.className = 'form-message error';
+            messageDiv.textContent = 'Eroare la trimiterea formularului. Te rugăm să încerci din nou.';
+        }
+    });
+}
+
+function closeComplexModal() {
+    const modal = document.getElementById('complex-site-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        const form = document.getElementById('complex-site-form');
+        if (form) form.reset();
+        const messageDiv = document.getElementById('complex-form-message');
+        if (messageDiv) {
+            messageDiv.style.display = 'none';
+            messageDiv.textContent = '';
+        }
+    }
+}
+
+// Make it globally available
+window.closeComplexModal = closeComplexModal;
+
+// Close complex modal handlers
+const complexModalClose = document.querySelector('#complex-site-modal .modal-close');
+if (complexModalClose) {
+    complexModalClose.addEventListener('click', closeComplexModal);
+}
+
+const complexModal = document.getElementById('complex-site-modal');
+if (complexModal) {
+    complexModal.addEventListener('click', (e) => {
+        if (e.target === complexModal) {
+            closeComplexModal();
+        }
+    });
+}
 
 function openWizard() {
     const modal = document.getElementById('site-wizard-modal');
@@ -563,8 +853,81 @@ function updateWizardStep(step) {
     const submitBtn = document.getElementById('wizard-submit');
 
     if (prevBtn) prevBtn.style.display = step > 1 ? 'block' : 'none';
-    if (nextBtn) nextBtn.style.display = step < 4 ? 'block' : 'none';
-    if (submitBtn) submitBtn.style.display = step === 4 ? 'block' : 'none';
+    if (nextBtn) nextBtn.style.display = step < 5 ? 'block' : 'none';
+    if (submitBtn) submitBtn.style.display = step === 5 ? 'block' : 'none';
+    
+    // Special handling for step 2 (theme selection)
+    if (step === 2) {
+        updateThemeSelection();
+    }
+    
+    // Special handling for step 4 (design)
+    if (step === 4) {
+        updateDesignOptions();
+    }
+    
+    // Special handling for step 5 (preview)
+    if (step === 5) {
+        generatePreview();
+    }
+}
+
+function updateThemeSelection() {
+    const features = planFeatures[selectedPlan] || planFeatures.basic;
+    const themeCards = document.querySelectorAll('.theme-card');
+    
+    themeCards.forEach(card => {
+        const theme = card.dataset.theme;
+        const isAvailable = features.themes.includes(theme);
+        
+        if (!isAvailable) {
+            card.style.opacity = '0.5';
+            card.style.pointerEvents = 'none';
+            card.classList.add('disabled');
+        } else {
+            card.style.opacity = '1';
+            card.style.pointerEvents = 'auto';
+            card.classList.remove('disabled');
+        }
+    });
+    
+    // Update note
+    const themeNote = document.getElementById('theme-note');
+    if (selectedPlan === 'basic') {
+        themeNote.innerHTML = '<p>💡 Planul <strong>Basic</strong> include doar temele Modern și Minimal. Upgrade la Pro pentru toate temele!</p>';
+    } else {
+        themeNote.innerHTML = '<p>✅ Toate temele sunt disponibile pentru planul tău!</p>';
+    }
+}
+
+function updateDesignOptions() {
+    const features = planFeatures[selectedPlan] || planFeatures.basic;
+    
+    // Show/hide logo upload
+    const logoUploadOption = document.getElementById('logo-upload-option');
+    const logoUpload = document.getElementById('logo-upload');
+    if (logoUploadOption && logoUpload) {
+        if (features.logoUpload) {
+            logoUploadOption.style.display = 'block';
+        } else {
+            logoUploadOption.style.display = 'none';
+            const uploadRadio = document.querySelector('input[name="logo-type"][value="upload"]');
+            const autoRadio = document.querySelector('input[name="logo-type"][value="auto"]');
+            if (uploadRadio) uploadRadio.checked = false;
+            if (autoRadio) autoRadio.checked = true;
+            logoUpload.style.display = 'none';
+        }
+    }
+    
+    // Show/hide image upload
+    const imagesSection = document.getElementById('images-section');
+    if (imagesSection) {
+        if (features.imageUpload) {
+            imagesSection.style.display = 'block';
+        } else {
+            imagesSection.style.display = 'none';
+        }
+    }
 }
 
 // Wizard navigation
@@ -575,7 +938,7 @@ const wizardSubmit = document.getElementById('wizard-submit');
 if (wizardNext) {
     wizardNext.addEventListener('click', () => {
         if (validateStep(currentWizardStep)) {
-            if (currentWizardStep < 4) {
+            if (currentWizardStep < 5) {
                 currentWizardStep++;
                 updateWizardStep(currentWizardStep);
             }
@@ -593,7 +956,17 @@ if (wizardPrev) {
 }
 
 function validateStep(step) {
-    if (step === 4) {
+    if (step === 2) {
+        // Validate theme selection
+        const selectedTheme = document.querySelector('.theme-card.selected');
+        if (!selectedTheme) {
+            alert('Te rugăm să selectezi o temă!');
+            return false;
+        }
+        siteConfig.theme = selectedTheme.dataset.theme;
+    }
+    if (step === 3) {
+        // Validate content
         const siteName = document.getElementById('site-name');
         const siteEmail = document.getElementById('site-email');
         if (!siteName.value || !siteEmail.value) {
@@ -601,7 +974,138 @@ function validateStep(step) {
             return false;
         }
     }
+    if (step === 5) {
+        // All data should be collected by now
+        collectAllData();
+    }
     return true;
+}
+
+// Theme selection
+document.querySelectorAll('.theme-card').forEach(card => {
+    card.addEventListener('click', function() {
+        if (this.classList.contains('disabled')) return;
+        
+        document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('selected'));
+        this.classList.add('selected');
+        siteConfig.theme = this.dataset.theme;
+        
+        // Set default colors for theme
+        if (typeof SITE_TEMPLATES !== 'undefined' && SITE_TEMPLATES[siteConfig.theme]) {
+            const themeDefaults = SITE_TEMPLATES[siteConfig.theme].defaultColors;
+            if (themeDefaults) {
+                siteConfig.primaryColor = themeDefaults.primary;
+                siteConfig.secondaryColor = themeDefaults.secondary;
+                const primaryColorInput = document.getElementById('primary-color');
+                const secondaryColorInput = document.getElementById('secondary-color');
+                if (primaryColorInput) primaryColorInput.value = themeDefaults.primary;
+                if (secondaryColorInput) secondaryColorInput.value = themeDefaults.secondary;
+                const primaryHex = document.getElementById('primary-color-hex');
+                const secondaryHex = document.getElementById('secondary-color-hex');
+                if (primaryHex) primaryHex.value = themeDefaults.primary;
+                if (secondaryHex) secondaryHex.value = themeDefaults.secondary;
+            }
+        }
+    });
+});
+
+// Logo upload handling
+document.querySelectorAll('input[name="logo-type"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        const logoUpload = document.getElementById('logo-upload');
+        if (e.target.value === 'upload') {
+            logoUpload.style.display = 'block';
+            siteConfig.logoType = 'upload';
+        } else {
+            logoUpload.style.display = 'none';
+            siteConfig.logoType = 'auto';
+            siteConfig.logoBase64 = null;
+        }
+    });
+});
+
+const logoFile = document.getElementById('logo-file');
+if (logoFile) {
+    logoFile.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                siteConfig.logoBase64 = event.target.result;
+                const preview = document.getElementById('logo-preview');
+                if (preview) {
+                    preview.innerHTML = `<img src="${event.target.result}" alt="Logo" style="max-width: 200px; max-height: 100px;">`;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
+// Image upload handling
+const heroImageFile = document.getElementById('hero-image-file');
+if (heroImageFile) {
+    heroImageFile.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                siteConfig.heroImageBase64 = event.target.result;
+                const preview = document.getElementById('hero-image-preview');
+                if (preview) {
+                    preview.innerHTML = `<img src="${event.target.result}" alt="Hero" style="max-width: 100%; max-height: 200px; border-radius: 8px;">`;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
+const aboutImageFile = document.getElementById('about-image-file');
+if (aboutImageFile) {
+    aboutImageFile.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                siteConfig.aboutImageBase64 = event.target.result;
+                const preview = document.getElementById('about-image-preview');
+                if (preview) {
+                    preview.innerHTML = `<img src="${event.target.result}" alt="About" style="max-width: 100%; max-height: 200px; border-radius: 8px;">`;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
+function collectAllData() {
+    // Collect all form data
+    siteConfig.siteName = document.getElementById('site-name')?.value || '';
+    siteConfig.heroTitle = document.getElementById('hero-title')?.value || '';
+    siteConfig.heroSubtitle = document.getElementById('hero-subtitle')?.value || '';
+    siteConfig.ctaButtonText = document.getElementById('cta-button-text')?.value || 'Contactează-ne';
+    siteConfig.aboutText = document.getElementById('about-text')?.value || '';
+    siteConfig.siteEmail = document.getElementById('site-email')?.value || '';
+    siteConfig.sitePhone = document.getElementById('site-phone')?.value || '';
+    siteConfig.siteAddress = document.getElementById('site-address')?.value || '';
+    siteConfig.primaryColor = document.getElementById('primary-color')?.value || '#6366F1';
+    siteConfig.secondaryColor = document.getElementById('secondary-color')?.value || '#8B5CF6';
+    const logoTypeRadio = document.querySelector('input[name="logo-type"]:checked');
+    siteConfig.logoType = logoTypeRadio ? logoTypeRadio.value : 'auto';
+}
+
+function generatePreview() {
+    collectAllData();
+    const previewContainer = document.getElementById('site-preview');
+    if (!previewContainer) return;
+    
+    if (typeof generateSiteHTML === 'function') {
+        const previewHTML = generateSiteHTML(siteConfig);
+        previewContainer.innerHTML = `<iframe srcdoc="${previewHTML.replace(/"/g, '&quot;')}" style="width: 100%; height: 600px; border: 1px solid #e5e7eb; border-radius: 12px;"></iframe>`;
+    } else {
+        previewContainer.innerHTML = '<p>Preview-ul va fi generat după ce completezi toate datele.</p>';
+    }
 }
 
 // Color picker updates
@@ -684,42 +1188,180 @@ document.querySelectorAll('input[name="sidebar-visible"]').forEach(checkbox => {
 // Submit wizard
 if (wizardSubmit) {
     wizardSubmit.addEventListener('click', async () => {
-        if (!validateStep(4)) return;
-
-        // Collect all data
-        siteConfig.siteName = document.getElementById('site-name').value;
-        siteConfig.siteEmail = document.getElementById('site-email').value;
-        siteConfig.sitePhone = document.getElementById('site-phone').value;
-        siteConfig.siteDescription = document.getElementById('site-description').value;
-        siteConfig.timestamp = new Date().toISOString();
-
-        // Plan 1 (Prezentare) - Generate automatically
-        if (selectedPlan === 'prezentare') {
-            generateSiteAutomatically(siteConfig);
-        } else {
-            // Plan 2 & 3 - Send email
-            await sendSiteRequestEmail(siteConfig);
+        collectAllData();
+        
+        if (!siteConfig.siteName || !siteConfig.siteEmail) {
+            alert('Te rugăm să completezi toate câmpurile obligatorii!');
+            return;
         }
+
+        // Generate site for all plans (all are presentation sites now)
+        generateSiteAutomatically(siteConfig);
     });
 }
 
-function generateSiteAutomatically(config) {
-    // Generate HTML for simple presentation site
-    const siteHTML = generateSiteHTML(config);
+async function generateSiteAutomatically(config) {
+    // Generate HTML using template system
+    let siteHTML;
+    if (typeof generateSiteHTML === 'function') {
+        siteHTML = generateSiteHTML(config);
+    } else {
+        // Fallback to simple template
+        siteHTML = generateSimpleSiteHTML(config);
+    }
     
-    // Create download link
-    const blob = new Blob([siteHTML], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${config.siteName.replace(/\s+/g, '-').toLowerCase()}-site.html`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    alert(`Site-ul tău a fost generat! Descarcă fișierul și urcă-l pe hosting. Vă vom contacta la ${config.siteEmail} pentru activare.`);
+    // Save template to backend
+    try {
+        const response = await fetch(`${API_BASE_URL}/templates`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                siteName: config.siteName,
+                siteType: config.siteType || 'prezentare',
+                plan: config.plan || 'basic',
+                theme: config.theme || 'modern',
+                htmlContent: siteHTML,
+                config: {
+                    primaryColor: config.primaryColor,
+                    secondaryColor: config.secondaryColor,
+                    heroTitle: config.heroTitle,
+                    heroSubtitle: config.heroSubtitle,
+                    ctaButtonText: config.ctaButtonText,
+                    aboutText: config.aboutText
+                },
+                clientEmail: config.siteEmail,
+                clientName: config.siteName
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            // Show success with access link
+            alert(`✅ Site-ul tău a fost generat cu succes!\n\n` +
+                  `ID Template: ${result.data.id}\n` +
+                  `Token: ${result.data.token}\n\n` +
+                  `Link acces: ${result.data.accessUrl}\n\n` +
+                  `Vei primi un email la ${config.siteEmail} cu link-ul de acces.\n\n` +
+                  `Vă vom contacta pentru mutarea pe hosting și cumpărarea domeniului.`);
+            
+            // Also create download link as backup
+            const blob = new Blob([siteHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${config.siteName.replace(/\s+/g, '-').toLowerCase()}-site.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } else {
+            throw new Error(result.message || 'Failed to save template');
+        }
+    } catch (error) {
+        console.error('Error saving template:', error);
+        // Fallback: just download
+        const blob = new Blob([siteHTML], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${config.siteName.replace(/\s+/g, '-').toLowerCase()}-site.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        alert(`✅ Site-ul a fost generat și descărcat!\n\n` +
+              `⚠️ Nu s-a putut salva în sistem (eroare: ${error.message}).\n` +
+              `Vă vom contacta la ${config.siteEmail} pentru mutarea pe hosting.`);
+    }
+    
     closeWizard();
+}
+
+function generateSimpleSiteHTML(config) {
+    return `<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${config.siteName}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; }
+        .header { background: ${config.primaryColor || '#6366F1'}; color: white; padding: 1rem 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; }
+        .nav a { color: white; text-decoration: none; margin-left: 2rem; }
+        .hero { padding: 4rem 0; text-align: center; background: linear-gradient(135deg, ${config.primaryColor || '#6366F1'}, ${config.secondaryColor || '#8B5CF6'}); color: white; }
+        .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+        .content { padding: 4rem 0; }
+        .btn { display: inline-block; padding: 1rem 2rem; background: white; color: ${config.primaryColor || '#6366F1'}; text-decoration: none; border-radius: 8px; margin-top: 1rem; }
+        .footer { background: #111; color: white; padding: 2rem 0; text-align: center; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">${config.siteName}</div>
+                <nav class="nav">
+                    <a href="#home">Acasă</a>
+                    <a href="#despre">Despre</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>${config.heroTitle || `Bun venit la ${config.siteName}`}</h1>
+            ${config.heroSubtitle ? `<p>${config.heroSubtitle}</p>` : ''}
+            <a href="#contact" class="btn">${config.ctaButtonText || 'Contactează-ne'}</a>
+        </div>
+    </section>
+    ${config.aboutText ? `
+    <section class="content" id="despre">
+        <div class="container">
+            <h2>Despre Noi</h2>
+            <p>${config.aboutText}</p>
+        </div>
+    </section>
+    ` : ''}
+    <section class="content" id="contact">
+        <div class="container">
+            <h2>Contact</h2>
+            ${config.siteEmail ? `<p>Email: ${config.siteEmail}</p>` : ''}
+            ${config.sitePhone ? `<p>Telefon: ${config.sitePhone}</p>` : ''}
+            ${config.siteAddress ? `<p>Adresă: ${config.siteAddress}</p>` : ''}
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ${config.siteName}. Toate drepturile rezervate.</p>
+        </div>
+    </footer>
+</body>
+</html>`;
+}
+
+async function sendSiteGeneratedEmail(config) {
+    // Send notification email to admin about generated site
+    try {
+        const response = await fetch(`${API_BASE_URL}/contact`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: config.siteName,
+                email: config.siteEmail,
+                subject: `Site generat - ${config.siteName} (${planNames[config.plan]})`,
+                message: `Un site nou a fost generat prin Site la Click.\n\nPlan: ${planNames[config.plan]} (${planPrices[config.plan]} RON/lună)\nTemă: ${config.theme}\nEmail client: ${config.siteEmail}\nTelefon: ${config.sitePhone || 'N/A'}`
+            })
+        });
+    } catch (error) {
+        console.log('Email notification failed (non-critical)', error);
+    }
 }
 
 function generateSiteHTML(config) {
